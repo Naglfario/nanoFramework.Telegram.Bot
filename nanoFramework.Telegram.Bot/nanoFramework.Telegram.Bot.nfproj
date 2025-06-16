@@ -18,7 +18,6 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="Core\API\MessageSender.cs" />
     <Compile Include="Core\Models\Commands\SendTelegramMessageCommand.cs" />
     <Compile Include="Core\Models\ITelegramResponse.cs" />
@@ -35,10 +34,15 @@
     <Compile Include="Core\Models\TelegramMessage.cs" />
     <Compile Include="Core\Models\Update\TelegramUpdate.cs" />
     <Compile Include="Core\Models\TelegramUser.cs" />
-    <Compile Include="Core\TelegramBot.cs" />
+    <Compile Include="Core\Providers\HttpClientProvider.cs" />
+    <Compile Include="Core\Providers\IHttpClientProvider.cs" />
+    <Compile Include="Core\Providers\ISettingsProvider.cs" />
+    <Compile Include="Core\Providers\IURLProvider.cs" />
+    <Compile Include="Core\Providers\URLProvider.cs" />
+    <Compile Include="TelegramBot.cs" />
     <Compile Include="Core\API\HttpUpdatesReceiver.cs" />
     <Compile Include="Core\TelegramBotEvents.cs" />
-    <Compile Include="Core\TelegramBotSettings.cs" />
+    <Compile Include="Core\Providers\SettingsProvider.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Extensions\TelegramResponseExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

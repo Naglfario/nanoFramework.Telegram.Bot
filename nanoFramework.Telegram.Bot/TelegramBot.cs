@@ -1,5 +1,6 @@
 ﻿using nanoFramework.Telegram.Bot.Core.API;
 using nanoFramework.Telegram.Bot.Core.Models.Commands;
+using nanoFramework.Telegram.Bot.Core.Providers;
 using nanoFramework.Telegram.Bot.Core.Updates;
 using System;
 
@@ -9,28 +10,32 @@ namespace nanoFramework.Telegram.Bot.Core
     {
         private HttpUpdatesReceiver _updatesReceiver;
         private MessageSender _sender;
-        public TelegramBotEvents Events { get; }
-        public TelegramBotSettings Settings { get; }
+        private readonly TelegramBotEvents _events;
+        private readonly SettingsProvider _settings;
+        private readonly URLProvider _urlProvider;
+        private readonly HttpClientProvider _httpClient;
 
         public TelegramBot(string token)
         {
-            Events = new TelegramBotEvents();
-            Settings = new TelegramBotSettings(token, Events);
+            _events = new();
+            _settings = new SettingsProvider(token, _events);
+            _urlProvider = new URLProvider(_settings);
+            _httpClient = new();
         }
 
         /// <summary>
         /// Start receiving messages
         /// </summary>
-        /// <param name="pollDelayMs"></param>
         public void StartReceiving(TelegramBotEvents.MessageDelegate messageDelegate, int pollDelayMs = 500)
         {
             if (_updatesReceiver != null && _updatesReceiver.IsEnabled) return;
 
-            Settings.SetPollDelay(pollDelayMs);
-            Events.OnMessageReceived += messageDelegate;
+            _settings.SetPollDelay(pollDelayMs);
+            _events.OnMessageReceived += messageDelegate;
 
             if (_updatesReceiver == null)
-                _updatesReceiver = new HttpUpdatesReceiver(Events, Settings);
+                _updatesReceiver = new HttpUpdatesReceiver(
+                    _events, _settings, _urlProvider, _httpClient);
             _updatesReceiver.Start();
         }
 
@@ -45,11 +50,11 @@ namespace nanoFramework.Telegram.Bot.Core
         }
 
         /// <summary>
-        /// Change <see cref="PollDelayMilliseconds"/>
+        /// Change poll delay
         /// </summary>
         public void UpdatePollDelay(int newValue)
         {
-            Settings.SetPollDelay(newValue);
+            _settings.SetPollDelay(newValue);
             _updatesReceiver.UpdateDelay();
         }
 
@@ -58,7 +63,7 @@ namespace nanoFramework.Telegram.Bot.Core
         /// </summary>
         public void Send(SendTelegramMessageCommand command)
         {
-            _sender ??= new MessageSender(Events, Settings);
+            _sender ??= new MessageSender(_events, _urlProvider, _httpClient);
 
             _sender.Send(command);
         }

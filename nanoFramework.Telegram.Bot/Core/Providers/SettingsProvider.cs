@@ -1,25 +1,21 @@
 ﻿using nanoFramework.Telegram.Bot.Core.Models.Problem;
 
-namespace nanoFramework.Telegram.Bot.Core
+namespace nanoFramework.Telegram.Bot.Core.Providers
 {
-    public class TelegramBotSettings
+    public class SettingsProvider : ISettingsProvider
     {
         private readonly TelegramBotEvents _events;
 
-        internal TelegramBotSettings(string token, TelegramBotEvents events)
+        internal SettingsProvider(string token, TelegramBotEvents events)
         {
             Token = token;
             _events = events;
         }
 
-        /// <summary>
-        /// Telegram bot API token
-        /// </summary>
+        /// <inheritdoc/>
         public string Token { get; }
 
-        /// <summary>
-        /// Delay between calls to Telegram getUpdates endpoint
-        /// </summary>
+        /// <inheritdoc/>
         public int PollDelayMilliseconds { get; private set; } = 500;
 
         internal void SetPollDelay(int delay)
