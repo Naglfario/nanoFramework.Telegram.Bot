@@ -1,28 +1,35 @@
-using nanoFramework.Telegram.Bot.Core;
-using nanoFramework.Telegram.Bot.Core.API;
 using nanoFramework.Telegram.Bot.Core.Models.Commands;
 using nanoFramework.Telegram.Bot.Core.Models.ReplyMarkup;
+using nanoFramework.Telegram.Bot.Core.Providers;
 using nanoFramework.TestFramework;
 
 namespace nanoFramework.Telegram.Bot.Tests
 {
     [TestClass]
-    public class MessageSenderTests
+    public class URLProviderTests
     {
+        public class FakeSettingsProvider : ISettingsProvider
+        {
+            public string Token => "TOKEN";
+
+            public int PollDelayMilliseconds => 500;
+        }
+
         [TestMethod]
         public void MinimalFilledCommand_GetUrl_ShouldBeCorrect()
         {
-            var bot = new TelegramBot("TOKEN");
-            var target = new MessageSender(bot.Events, bot.Settings);
+            var settings = new FakeSettingsProvider();
+            var target = new URLProvider(settings);
             var command = new SendTelegramMessageCommand()
             {
                 chat_id = 1,
                 text = "hello"
             };
-            var act = target.GetUrl(command);
+
+            var act = target.SendMessage(command);
 
             Assert.AreEqual(
-                $"https://api.telegram.org/bot{bot.Settings.Token}/sendMessage?" +
+                $"https://api.telegram.org/bot{settings.Token}/sendMessage?" +
                 $"chat_id={command.chat_id}&text={command.text}" +
                 $"&disable_notification={command.disable_notification}" +
                 $"&protect_content={command.protect_content}",
@@ -32,8 +39,8 @@ namespace nanoFramework.Telegram.Bot.Tests
         [TestMethod]
         public void MaximumFilledCommand_GetUrl_ShouldBeCorrect()
         {
-            var bot = new TelegramBot("TOKEN");
-            var target = new MessageSender(bot.Events, bot.Settings);
+            var settings = new FakeSettingsProvider();
+            var target = new URLProvider(settings);
             var forceReply = new ForceReply()
             {
                 force_reply = true,
@@ -58,7 +65,7 @@ namespace nanoFramework.Telegram.Bot.Tests
                 },
                 reply_markup = forceReply
             };
-            var act = target.GetUrl(command);
+            var act = target.SendMessage(command);
 
             Assert.Contains($"chat_id={command.chat_id}", act);
             Assert.Contains($"&text={command.text}", act);

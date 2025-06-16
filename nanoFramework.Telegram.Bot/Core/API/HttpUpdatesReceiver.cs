@@ -1,28 +1,34 @@
 ﻿using nanoFramework.Json;
 using nanoFramework.Telegram.Bot.Core.Models.Problem;
 using nanoFramework.Telegram.Bot.Core.Models.Update;
+using nanoFramework.Telegram.Bot.Core.Providers;
 using nanoFramework.Telegram.Bot.Extensions;
 using System;
-using System.Net.Http;
 using System.Threading;
 
 namespace nanoFramework.Telegram.Bot.Core.Updates
 {
     internal class HttpUpdatesReceiver : IDisposable
     {
-        private readonly HttpClient _httpClient;
         private readonly TelegramBotEvents _events;
-        private readonly TelegramBotSettings _settings;
+        private readonly ISettingsProvider _settings;
+        private readonly IURLProvider _urlProvider;
+        private readonly IHttpClientProvider _httpClient;
         private long _lastSeenUpdateId = 0;
         private Timer _timer;
 
         public bool IsEnabled { get; private set; } = false;
 
-        public HttpUpdatesReceiver(TelegramBotEvents events, TelegramBotSettings settings)
+        public HttpUpdatesReceiver(
+            TelegramBotEvents events,
+            ISettingsProvider settings,
+            IURLProvider urlProvider,
+            IHttpClientProvider httpClient)
         {
-            _httpClient = new HttpClient();
             _events = events;
             _settings = settings;
+            _urlProvider = urlProvider;
+            _httpClient = httpClient;
         }
 
         public void Dispose()
@@ -64,11 +70,8 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
         {
             try
             {
-                var url = Constants.TelegramBaseUrl
-                    + _settings.Token
-                    + Constants.GetUpdatesRoute;
-                if (_lastSeenUpdateId > 0) url += $"{Constants.OffsetParam}{_lastSeenUpdateId}";
-                var response = _httpClient.Get(url);
+                var url = _urlProvider.GetUpdates(_lastSeenUpdateId);
+                using var response = _httpClient.Get(url);
 
                 if (!response.IsSuccessStatusCode)
                 {
