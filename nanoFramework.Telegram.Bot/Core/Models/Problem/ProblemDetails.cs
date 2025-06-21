@@ -24,6 +24,12 @@ namespace nanoFramework.Telegram.Bot.Core.Models.Problem
                     "The bot will not receive anything from Telegram, " +
                     "it will only be able to send messages.";
             }
+            else if(type == ErrorType.IncorrectUpdatesLimit)
+            {
+                Message = "Updates limit must be from 1 to 100 (default 1). " +
+                    "It is not recommended to set this parameter > 10, " +
+                    "remember that there is very little RAM on embedded devices.";
+            }
         }
 
         public ProblemDetails(Exception ex)

@@ -13,6 +13,12 @@ namespace nanoFramework.Telegram.Bot.Tests
             public string Token => "TOKEN";
 
             public int PollDelayMilliseconds => 500;
+
+            public int UpdatesLimitPerRequest => 1;
+
+            public bool TrackMessages => true;
+
+            public bool TrackCallbackQuery => false;
         }
 
         [TestMethod]

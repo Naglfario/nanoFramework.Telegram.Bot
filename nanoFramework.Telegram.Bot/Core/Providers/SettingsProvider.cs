@@ -16,7 +16,10 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
         public string Token { get; }
 
         /// <inheritdoc/>
-        public int PollDelayMilliseconds { get; private set; } = 500;
+        public int PollDelayMilliseconds { get; private set; } = 1000;
+
+        /// <inheritdoc/>
+        public int UpdatesLimitPerRequest { get; private set; } = 1;
 
         /// <inheritdoc/>
         public bool TrackMessages { get; private set; } = true;
@@ -33,6 +36,17 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
             }
 
             PollDelayMilliseconds = delay;
+        }
+
+        internal void SetUpdatesLimit(int newValue)
+        {
+            if(newValue < 1 || newValue > 100)
+            {
+                _events.RaiseError(new ProblemDetails(ErrorType.IncorrectPollDelay));
+                return;
+            }
+
+            UpdatesLimitPerRequest = newValue;
         }
 
         internal void SetTrackMessagesValue(bool newState)
