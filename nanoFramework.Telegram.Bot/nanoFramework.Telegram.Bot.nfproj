@@ -18,8 +18,10 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="Core\API\GetMeReceiver.cs" />
     <Compile Include="Core\API\MessageSender.cs" />
     <Compile Include="Core\Models\Commands\SendTelegramMessageCommand.cs" />
+    <Compile Include="Core\Models\GetMeResponse.cs" />
     <Compile Include="Core\Models\ITelegramResponse.cs" />
     <Compile Include="Core\Models\Problem\ErrorType.cs" />
     <Compile Include="Core\Models\Problem\ProblemDetails.cs" />
@@ -34,6 +36,7 @@
     <Compile Include="Core\Models\ReplyMarkup\ReplyParameters.cs" />
     <Compile Include="Core\Models\TelegramSendMessageResponse.cs" />
     <Compile Include="Core\Models\Update\CallbackQuery.cs" />
+    <Compile Include="Core\Models\TelegramResponseBase.cs" />
     <Compile Include="Core\Models\Update\TelegramUpdateResponse.cs" />
     <Compile Include="Core\Models\TelegramChat.cs" />
     <Compile Include="Core\Models\TelegramMessage.cs" />

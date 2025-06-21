@@ -1,4 +1,5 @@
 ﻿using nanoFramework.Telegram.Bot.Core.API;
+using nanoFramework.Telegram.Bot.Core.Models;
 using nanoFramework.Telegram.Bot.Core.Models.Commands;
 using nanoFramework.Telegram.Bot.Core.Providers;
 using nanoFramework.Telegram.Bot.Core.Updates;
@@ -10,6 +11,8 @@ namespace nanoFramework.Telegram.Bot.Core
     {
         private HttpUpdatesReceiver _updatesReceiver;
         private MessageSender _sender;
+        private GetMeReceiver _getMeReceiver;
+
         private readonly TelegramBotEvents _events;
         private readonly SettingsProvider _settings;
         private readonly URLProvider _urlProvider;
@@ -21,6 +24,21 @@ namespace nanoFramework.Telegram.Bot.Core
             _settings = new SettingsProvider(token, _events);
             _urlProvider = new URLProvider(_settings);
             _httpClient = new();
+        }
+
+        /// <summary>
+        /// Executes /getMe endpoint and returns a basic response, 
+        /// without information about the bot, you already know it, don't you?
+        /// So, this method needed only to check connection.
+        /// </summary>
+        public GetMeResponse CheckConnection()
+        {
+            if(_getMeReceiver == null)
+            {
+                _getMeReceiver = new GetMeReceiver(_urlProvider, _httpClient);
+            }
+
+            return _getMeReceiver.GetMe();
         }
 
         /// <summary>
