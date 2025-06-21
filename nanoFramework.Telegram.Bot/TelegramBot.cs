@@ -59,6 +59,20 @@ namespace nanoFramework.Telegram.Bot.Core
         }
 
         /// <summary>
+        /// Track messages that users send to the bot?
+        /// It will works after call <see cref="StartReceiving"/> method
+        /// </summary>
+        public void ToggleMessageReceiving(bool newState)
+            => _settings.SetTrackMessagesValue(newState);
+
+        /// <summary>
+        /// Track callback query updates(for example, inline keyboarad events)?
+        /// It will works after call <see cref="StartReceiving"/> method
+        /// </summary>
+        public void ToggleCallbackDataUpdatesReceiving(bool newState)
+            => _settings.SetTrackMessagesValue(newState);
+
+        /// <summary>
         /// Send message
         /// </summary>
         public void Send(SendTelegramMessageCommand command)

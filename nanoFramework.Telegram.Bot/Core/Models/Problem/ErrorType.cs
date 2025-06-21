@@ -26,5 +26,10 @@
         /// Wrong value for poll dalay
         /// </summary>
         IncorrectPollDelay,
+
+        /// <summary>
+        /// Both available update types (messages & callback data) are disabled.
+        /// </summary>
+        NothingToReceive
     }
 }

@@ -70,6 +70,8 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
         {
             try
             {
+                if (!_settings.TrackMessages && !_settings.TrackCallbackQuery) return;
+
                 var url = _urlProvider.GetUpdates(_lastSeenUpdateId);
                 using var response = _httpClient.Get(url);
 
@@ -98,7 +100,10 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
 
                 foreach (var update in telegramResponse.result)
                 {
-                    _events.RaiseMessageReceived(update.message);
+                    if (update.message != null)
+                        _events.RaiseMessageReceived(update.message);
+                    else if(update.callback_query != null)
+                        _events.RaiseCallbackReceived(update.callback_query);
                 }
             }
             catch (Exception ex)

@@ -18,6 +18,12 @@ namespace nanoFramework.Telegram.Bot.Core.Models.Problem
             {
                 Message = "Poll delay must be >= 0";
             }
+            else if(type == ErrorType.NothingToReceive)
+            {
+                Message = "Both available update types(messages & callback data) are disabled. " +
+                    "The bot will not receive anything from Telegram, " +
+                    "it will only be able to send messages.";
+            }
         }
 
         public ProblemDetails(Exception ex)
