@@ -15,6 +15,7 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
         internal const string TrackCallbackQuery = "%22callback_query%22";
         internal const string OffsetParam = "offset=";
         internal const string SendMessageRoute = "/sendMessage?";
+        internal const string GetMeRoute = "/getMe";
 
         internal const string ChatIdParam = "chat_id=";
         internal const string TextParam = "&text=";
@@ -82,6 +83,16 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
                 var replyMarkupJson = JsonSerializer.SerializeObject(command.reply_markup, false);
                 sb.Append(ReplyMarkupParam); sb.Append(replyMarkupJson);
             }
+
+            return sb.ToString();
+        }
+
+        public string GetMe()
+        {
+            var sb = new StringBuilder(TelegramBaseUrl);
+
+            sb.Append(_settings.Token);
+            sb.Append(GetMeRoute);
 
             return sb.ToString();
         }
