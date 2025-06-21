@@ -13,6 +13,12 @@
         public int PollDelayMilliseconds { get; }
 
         /// <summary>
+        /// Maximum number of updates received per request to /getUpdates endpoint
+        /// (in telegram API this paramter calls just "limit")
+        /// </summary>
+        public int UpdatesLimitPerRequest { get; }
+
+        /// <summary>
         /// Receive messages from Telegram that users send to the bot
         /// </summary>
         public bool TrackMessages { get; }

@@ -9,14 +9,17 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
         private readonly ISettingsProvider _settings;
 
         internal const string TelegramBaseUrl = "https://api.telegram.org/bot";
+
         internal const string GetUpdatesRoute = "/getUpdates?";
         internal const string AllowUpdatesStart = "allowed_updates=[";
         internal const string TrackMessages = "%22message%22";
         internal const string TrackCallbackQuery = "%22callback_query%22";
         internal const string OffsetParam = "offset=";
-        internal const string SendMessageRoute = "/sendMessage?";
+        internal const string LimitParam = "&limit=";
+
         internal const string GetMeRoute = "/getMe";
 
+        internal const string SendMessageRoute = "/sendMessage?";
         internal const string ChatIdParam = "chat_id=";
         internal const string TextParam = "&text=";
         internal const string DisableNotificationParam = "&disable_notification=";
@@ -54,6 +57,9 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
                 sb.Append(OffsetParam);
                 sb.Append(lastUpdateId);
             }
+
+            sb.Append(LimitParam);
+            sb.Append(_settings.UpdatesLimitPerRequest);
 
             return sb.ToString();
         }

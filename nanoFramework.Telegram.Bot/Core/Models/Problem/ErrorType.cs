@@ -30,6 +30,11 @@
         /// <summary>
         /// Both available update types (messages & callback data) are disabled.
         /// </summary>
-        NothingToReceive
+        NothingToReceive,
+
+        /// <summary>
+        /// Invalid value for updates limit. Limit can be from 1 to 100.
+        /// </summary>
+        IncorrectUpdatesLimit
     }
 }

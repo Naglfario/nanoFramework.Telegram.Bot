@@ -68,13 +68,20 @@ namespace nanoFramework.Telegram.Bot.Core
         }
 
         /// <summary>
-        /// Change poll delay
+        /// Change poll delay (default 1000 ms)
         /// </summary>
         public void UpdatePollDelay(int newValue)
         {
             _settings.SetPollDelay(newValue);
             _updatesReceiver.UpdateDelay();
         }
+
+        /// <summary>
+        /// Update limit on number of updates that program will request per one time
+        /// (default 1)
+        /// </summary>
+        public void UpdateLimit(int newValue)
+            => _settings.SetUpdatesLimit(newValue);
 
         /// <summary>
         /// Track messages that users send to the bot?
