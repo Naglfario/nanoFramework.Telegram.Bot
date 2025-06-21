@@ -35,7 +35,7 @@
         /// Optional. Mode for parsing entities in the quote.
         /// Possible values: Markdown, MarkdownV2, Html
         /// </summary>
-        public string quote_parse_mode { get; set; } = default;
+        public string quote_parse_mode { get; set; } = null;
 
         /// <summary>
         /// Optional. Position of the quote in the original message in UTF-16 code units

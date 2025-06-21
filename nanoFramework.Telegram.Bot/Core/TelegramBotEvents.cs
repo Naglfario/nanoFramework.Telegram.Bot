@@ -1,5 +1,6 @@
 ﻿using nanoFramework.Telegram.Bot.Core.Models;
 using nanoFramework.Telegram.Bot.Core.Models.Problem;
+using nanoFramework.Telegram.Bot.Core.Models.Update;
 
 namespace nanoFramework.Telegram.Bot.Core
 {
@@ -7,9 +8,11 @@ namespace nanoFramework.Telegram.Bot.Core
     {
         public delegate void ErrorDelegate(ProblemDetails problem);
         public delegate void MessageDelegate(TelegramMessage message);
+        public delegate void CallbackQueryDelegate(CallbackQuery callback);
 
         public event ErrorDelegate OnError;
         public event MessageDelegate OnMessageReceived;
+        public event CallbackQueryDelegate OnCallbackQuery;
 
         internal bool IsErrorsTracked => OnError != null;
 
@@ -25,6 +28,13 @@ namespace nanoFramework.Telegram.Bot.Core
             if(message == null) return;
 
             OnMessageReceived?.Invoke(message);
+        }
+
+        internal void RaiseCallbackReceived(CallbackQuery callback)
+        {
+            if (callback == null) return;
+
+            OnCallbackQuery?.Invoke(callback);
         }
     }
 }

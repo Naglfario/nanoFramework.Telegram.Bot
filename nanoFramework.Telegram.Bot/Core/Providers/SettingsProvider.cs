@@ -18,6 +18,12 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
         /// <inheritdoc/>
         public int PollDelayMilliseconds { get; private set; } = 500;
 
+        /// <inheritdoc/>
+        public bool TrackMessages { get; private set; } = true;
+
+        /// <inheritdoc/>
+        public bool TrackCallbackQuery { get; private set; } = false;
+
         internal void SetPollDelay(int delay)
         {
             if(delay < 0)
@@ -27,6 +33,26 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
             }
 
             PollDelayMilliseconds = delay;
+        }
+
+        internal void SetTrackMessagesValue(bool newState)
+        {
+            TrackMessages = newState;
+
+            if(!TrackMessages && !TrackCallbackQuery)
+            {
+                _events.RaiseError(new ProblemDetails(ErrorType.NothingToReceive));
+            }
+        }
+
+        internal void SetTrackCallbackQueryValue(bool newState)
+        {
+            TrackCallbackQuery = newState;
+
+            if (!TrackMessages && !TrackCallbackQuery)
+            {
+                _events.RaiseError(new ProblemDetails(ErrorType.NothingToReceive));
+            }
         }
     }
 }

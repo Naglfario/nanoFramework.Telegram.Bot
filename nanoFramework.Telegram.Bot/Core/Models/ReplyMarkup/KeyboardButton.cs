@@ -11,6 +11,6 @@
         /// Text of the button. If none of the optional fields are used,
         /// it will be sentas a message when the button is pressed
         /// </summary>
-        public string text { get; set; }
+        public string text { get; set; } = "Can't be empty!";
     }
 }
