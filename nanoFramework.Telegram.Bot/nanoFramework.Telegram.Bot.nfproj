@@ -23,12 +23,17 @@
     <Compile Include="Core\Models\ITelegramResponse.cs" />
     <Compile Include="Core\Models\Problem\ErrorType.cs" />
     <Compile Include="Core\Models\Problem\ProblemDetails.cs" />
+    <Compile Include="Core\Models\ReplyMarkup\CopyTextButton.cs" />
     <Compile Include="Core\Models\ReplyMarkup\ForceReply.cs" />
+    <Compile Include="Core\Models\ReplyMarkup\InlineKeyboardButton.cs" />
+    <Compile Include="Core\Models\ReplyMarkup\InlineKeyboardMarkup.cs" />
     <Compile Include="Core\Models\ReplyMarkup\IReplyMarkup.cs" />
     <Compile Include="Core\Models\ReplyMarkup\KeyboardButton.cs" />
     <Compile Include="Core\Models\ReplyMarkup\ReplyKeyboardMarkup.cs" />
+    <Compile Include="Core\Models\ReplyMarkup\ReplyKeyboardRemove.cs" />
     <Compile Include="Core\Models\ReplyMarkup\ReplyParameters.cs" />
     <Compile Include="Core\Models\TelegramSendMessageResponse.cs" />
+    <Compile Include="Core\Models\Update\CallbackQuery.cs" />
     <Compile Include="Core\Models\Update\TelegramUpdateResponse.cs" />
     <Compile Include="Core\Models\TelegramChat.cs" />
     <Compile Include="Core\Models\TelegramMessage.cs" />
