@@ -98,6 +98,13 @@ namespace nanoFramework.Telegram.Bot.Core
             => _settings.SetTrackMessagesValue(newState);
 
         /// <summary>
+        /// Notify about message sending errors via events?
+        /// Default: false
+        /// </summary>
+        public void ToggleUseEventsForSendFailures(bool newState)
+            => _settings.SetUseEventsForSendFailures(newState);
+
+        /// <summary>
         /// Send message
         /// </summary>
         public SendResult Send(SendTelegramMessageCommand command)
