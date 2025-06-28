@@ -25,7 +25,6 @@ namespace nanoFramework.Telegram.Bot.Core.API
                 var url = _urlProvider.GetMe();
                 using var response = _httpClient.Get(url);
                 if (response == null) return null;
-                else if (!response.IsSuccessStatusCode) return null;
 
                 var deserializedResponseObject = JsonConvert.DeserializeObject(
                     response.Content.ReadAsStream(), typeof(GetMeResponse));

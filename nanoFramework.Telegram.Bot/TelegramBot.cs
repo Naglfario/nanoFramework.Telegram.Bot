@@ -100,11 +100,11 @@ namespace nanoFramework.Telegram.Bot.Core
         /// <summary>
         /// Send message
         /// </summary>
-        public void Send(SendTelegramMessageCommand command)
+        public SendResult Send(SendTelegramMessageCommand command)
         {
-            _sender ??= new MessageSender(_events, _urlProvider, _httpClient);
+            _sender ??= new MessageSender(_events, _urlProvider, _httpClient, _settings);
 
-            _sender.Send(command);
+            return _sender.Send(command);
         }
 
         public void Dispose()

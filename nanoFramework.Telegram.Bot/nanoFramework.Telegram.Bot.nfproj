@@ -34,6 +34,7 @@
     <Compile Include="Core\Models\ReplyMarkup\ReplyKeyboardMarkup.cs" />
     <Compile Include="Core\Models\ReplyMarkup\ReplyKeyboardRemove.cs" />
     <Compile Include="Core\Models\ReplyMarkup\ReplyParameters.cs" />
+    <Compile Include="Core\Models\SendResult.cs" />
     <Compile Include="Core\Models\TelegramSendMessageResponse.cs" />
     <Compile Include="Core\Models\Update\CallbackQuery.cs" />
     <Compile Include="Core\Models\TelegramResponseBase.cs" />

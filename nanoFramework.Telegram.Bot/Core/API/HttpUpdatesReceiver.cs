@@ -1,5 +1,4 @@
 ﻿using nanoFramework.Json;
-using nanoFramework.Telegram.Bot.Core.Models.Problem;
 using nanoFramework.Telegram.Bot.Core.Models.Update;
 using nanoFramework.Telegram.Bot.Core.Providers;
 using nanoFramework.Telegram.Bot.Extensions;
@@ -61,8 +60,8 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
 
         private static void TimerCallback(object state)
         {
-            var myDevice = (HttpUpdatesReceiver)state;
-            var longRunningThread = new Thread(myDevice.GetUpdates);
+            var receiver = (HttpUpdatesReceiver)state;
+            var longRunningThread = new Thread(receiver.GetUpdates);
             longRunningThread.Start();
         }
 
@@ -108,7 +107,7 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
             }
             catch (Exception ex)
             {
-                _events.RaiseError(new ProblemDetails(ex));
+                _events.RaiseError(new(ex));
             }
         }
     }

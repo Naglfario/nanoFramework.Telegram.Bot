@@ -1,6 +1,6 @@
-﻿using nanoFramework.Json;
-using nanoFramework.Telegram.Bot.Core.Models;
+﻿using nanoFramework.Telegram.Bot.Core.Models;
 using nanoFramework.Telegram.Bot.Core.Models.Commands;
+using nanoFramework.Telegram.Bot.Core.Models.Problem;
 using nanoFramework.Telegram.Bot.Core.Providers;
 using nanoFramework.Telegram.Bot.Extensions;
 using System;
@@ -13,48 +13,47 @@ namespace nanoFramework.Telegram.Bot.Core.API
         private readonly TelegramBotEvents _events;
         private readonly IURLProvider _urlProvider;
         private readonly IHttpClientProvider _httpClient;
+        private readonly ISettingsProvider _settings;
 
         public MessageSender(
             TelegramBotEvents events,
             IURLProvider urlProvider,
-            IHttpClientProvider httpClient)
+            IHttpClientProvider httpClient,
+            ISettingsProvider settings)
         {
             _events = events;
             _urlProvider = urlProvider;
             _httpClient = httpClient;
+            _settings = settings;
         }
 
-        public void Send(SendTelegramMessageCommand command)
+        public SendResult Send(SendTelegramMessageCommand command)
         {
             try
             {
                 var url = _urlProvider.SendMessage(command);
                 using var response = _httpClient.Get(url);
-                HandleProblems(response);
+                return HandleProblems(response);
             }
             catch (Exception ex)
             {
-                _events.RaiseError(new(ex));
+                var problemDetails = new ProblemDetails(ex);
+                if(_settings.UseEventsForSendFailures) _events.RaiseError(problemDetails);
+                return new SendResult(problemDetails);
             }
         }
 
-        internal void HandleProblems(HttpResponseMessage response)
+        internal SendResult HandleProblems(HttpResponseMessage response)
         {
             var problemDetails = response.GetProblemDetails();
             if (problemDetails != null)
             {
-                _events.RaiseError(problemDetails);
+                if (_settings.UseEventsForSendFailures) _events.RaiseError(problemDetails);
 
-                return;
+                return new SendResult(problemDetails);
             }
 
-            if (_events.IsErrorsTracked)
-            {
-                var telegramResponse = (TelegramSendMessageResponse)JsonConvert.DeserializeObject(
-                    response.Content.ReadAsStream(), typeof(TelegramSendMessageResponse));
-
-                _events.RaiseError(telegramResponse.GetProblemDetails());
-            }
+            return new SendResult();
         }
 
         public void Dispose()

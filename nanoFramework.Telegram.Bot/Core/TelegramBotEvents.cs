@@ -14,8 +14,6 @@ namespace nanoFramework.Telegram.Bot.Core
         public event MessageDelegate OnMessageReceived;
         public event CallbackQueryDelegate OnCallbackQuery;
 
-        internal bool IsErrorsTracked => OnError != null;
-
         internal void RaiseError(ProblemDetails problem)
         {
             if (problem == null) return;
