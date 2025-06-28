@@ -27,6 +27,9 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
         /// <inheritdoc/>
         public bool TrackCallbackQuery { get; private set; } = false;
 
+        /// <inheritdoc/>
+        public bool UseEventsForSendFailures { get; private set; } = false;
+
         internal void SetPollDelay(int delay)
         {
             if(delay < 0)
@@ -67,6 +70,11 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
             {
                 _events.RaiseError(new ProblemDetails(ErrorType.NothingToReceive));
             }
+        }
+
+        internal void SetUseEventsForSendFailures(bool newState)
+        {
+            UseEventsForSendFailures = newState;
         }
     }
 }

@@ -27,5 +27,10 @@
         /// Receive callback data from Telegram (for example, inline keyboard events)
         /// </summary>
         public bool TrackCallbackQuery { get; }
+
+        /// <summary>
+        /// Notify about message sending errors via events
+        /// </summary>
+        public bool UseEventsForSendFailures { get; }
     }
 }
