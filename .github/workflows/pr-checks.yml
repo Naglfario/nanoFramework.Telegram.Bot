@@ -16,7 +16,7 @@ jobs:
       - name: Run nanoFramework tests
         uses: CCSWE-nanoFramework/vstest-nanoframework@v1
         with:
-          solutionFolder: ''
-          runSettings: '.\\nanoFramework.Telegram.Bot.Tests\\nano.runsettings'
+          solutionFolder: '.\'
+          runSettings: '.\nanoFramework.Telegram.Bot.Tests\nano.runsettings'
           artifactName: 'unit_test_results'
           artifactRetentionDays: 7
