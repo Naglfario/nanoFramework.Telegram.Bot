@@ -22,6 +22,12 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
         }
 
         [TestMethod]
+        public void FailedTest_Example()
+        {
+            Assert.IsTrue(false);
+        }
+
+        [TestMethod]
         public void HttpClientReturnNotSuccessStatusCode_ShouldReturnNullAndNotThrow()
         {
             var urlProvider = new FakeURLProvider();
