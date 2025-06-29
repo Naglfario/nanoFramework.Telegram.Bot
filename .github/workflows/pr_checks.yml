@@ -56,3 +56,4 @@ jobs:
       with:
         runSettings: '.\nanoFramework.Telegram.Bot.Tests\nano.runsettings'
         artifactName: 'unit_test_results'
+        artifactRetentionDays: 7
