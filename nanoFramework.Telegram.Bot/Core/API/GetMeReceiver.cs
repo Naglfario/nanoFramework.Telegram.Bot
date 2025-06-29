@@ -27,7 +27,7 @@ namespace nanoFramework.Telegram.Bot.Core.API
                 if (response == null) return null;
 
                 var deserializedResponseObject = JsonConvert.DeserializeObject(
-                    response.Content.ReadAsStream(), typeof(GetMeResponse));
+                    response.Content.ReadAsString(), typeof(GetMeResponse));
 
                 return deserializedResponseObject is GetMeResponse deserializedResponse
                     ? deserializedResponse

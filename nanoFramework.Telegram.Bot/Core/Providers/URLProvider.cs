@@ -55,7 +55,8 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
             if (lastUpdateId > 0)
             {
                 sb.Append(OffsetParam);
-                sb.Append(lastUpdateId);
+                var offset = lastUpdateId + 1;
+                sb.Append(offset);
             }
 
             sb.Append(LimitParam);

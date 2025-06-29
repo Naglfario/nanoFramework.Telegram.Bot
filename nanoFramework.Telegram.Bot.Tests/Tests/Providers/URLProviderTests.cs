@@ -123,7 +123,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.Providers
 
             var act = target.GetUpdates(offset);
 
-            Assert.Contains($"offset={offset}", act);
+            Assert.Contains($"offset={offset+1}", act);
         }
 
         [TestMethod]

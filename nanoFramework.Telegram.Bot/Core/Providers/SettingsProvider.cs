@@ -16,7 +16,7 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
         public string Token { get; }
 
         /// <inheritdoc/>
-        public int PollDelayMilliseconds { get; private set; } = 1000;
+        public int PollDelayMilliseconds { get; private set; } = 5000;
 
         /// <inheritdoc/>
         public int UpdatesLimitPerRequest { get; private set; } = 1;
