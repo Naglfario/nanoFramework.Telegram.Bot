@@ -1,0 +1,31 @@
+name: nanoFramework Unit Tests
+
+on:
+  pull_request:
+    branches: [ main ]
+  
+  workflow_dispatch:
+    inputs:
+      solution-folder:
+        description: 'Path to solution folder (e.g., ./src)'
+        required: false
+        default: '.'
+      run-settings:
+        description: 'Path to .runsettings file'
+        required: false
+        default: './nanoFramework.Telegram.Bot.Tests/nano.runsettings'
+
+jobs:
+  run-tests:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run nanoFramework tests
+        uses: CCSWE-nanoFramework/vstest-nanoframework@v1
+        with:
+          solutionFolder: ${{ github.event.inputs.solution-folder || '.' }}
+          runSettings: ${{ github.event.inputs.run-settings || './nanoFramework.Telegram.Bot.Tests/nano.runsettings' }}
+          artifactName: 'unit_test_results'
+          artifactRetentionDays: 7
