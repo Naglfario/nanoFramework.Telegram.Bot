@@ -57,3 +57,15 @@ jobs:
         runSettings: '.\nanoFramework.Telegram.Bot.Tests\nano.runsettings'
         artifactName: 'unit_test_results'
         artifactRetentionDays: 7
+
+    - name: Post failure comment
+      if: failure() && github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { data: comment } = await github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `❌ Tests failed [See artifacts](${github.server_url}/${github.repository}/actions/runs/${github.run_id})`
+          })
