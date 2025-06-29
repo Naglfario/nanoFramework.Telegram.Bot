@@ -4,26 +4,27 @@ using nanoFramework.Telegram.Bot.Core.Models.Commands;
 using nanoFramework.Telegram.Bot.Core.Providers;
 using nanoFramework.Telegram.Bot.Core.Updates;
 using System;
+using System.Net.Http;
 
 namespace nanoFramework.Telegram.Bot.Core
 {
     public class TelegramBot : IDisposable
     {
+        public readonly TelegramBotEvents Events = new();
+
         private HttpUpdatesReceiver _updatesReceiver;
         private MessageSender _sender;
         private GetMeReceiver _getMeReceiver;
 
-        private readonly TelegramBotEvents _events;
         private readonly SettingsProvider _settings;
         private readonly URLProvider _urlProvider;
         private readonly HttpClientProvider _httpClient;
 
-        public TelegramBot(string token)
+        public TelegramBot(string token, HttpClient client)
         {
-            _events = new();
-            _settings = new SettingsProvider(token, _events);
+            _settings = new SettingsProvider(token, Events);
             _urlProvider = new URLProvider(_settings);
-            _httpClient = new();
+            _httpClient = new HttpClientProvider(client);
         }
 
         /// <summary>
@@ -44,16 +45,18 @@ namespace nanoFramework.Telegram.Bot.Core
         /// <summary>
         /// Start receiving messages
         /// </summary>
-        public void StartReceiving(TelegramBotEvents.MessageDelegate messageDelegate, int pollDelayMs = 500)
+        public void StartReceiving(int pollDelayMs = 5000)
         {
             if (_updatesReceiver != null && _updatesReceiver.IsEnabled) return;
 
             _settings.SetPollDelay(pollDelayMs);
-            _events.OnMessageReceived += messageDelegate;
 
             if (_updatesReceiver == null)
+            {
                 _updatesReceiver = new HttpUpdatesReceiver(
-                    _events, _settings, _urlProvider, _httpClient);
+                    Events, _settings, _urlProvider, _httpClient);
+            }
+
             _updatesReceiver.Start();
         }
 
@@ -109,7 +112,7 @@ namespace nanoFramework.Telegram.Bot.Core
         /// </summary>
         public SendResult Send(SendTelegramMessageCommand command)
         {
-            _sender ??= new MessageSender(_events, _urlProvider, _httpClient, _settings);
+            _sender ??= new MessageSender(Events, _urlProvider, _httpClient, _settings);
 
             return _sender.Send(command);
         }
@@ -118,6 +121,7 @@ namespace nanoFramework.Telegram.Bot.Core
         {
             _updatesReceiver?.Dispose();
             _sender?.Dispose();
+            _httpClient?.Dispose();
         }
     }
 }

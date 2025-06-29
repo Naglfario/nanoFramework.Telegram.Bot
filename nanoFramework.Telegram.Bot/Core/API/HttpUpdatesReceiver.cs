@@ -82,7 +82,7 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
                 }
 
                 var telegramResponse = (TelegramUpdateResponse)JsonConvert.DeserializeObject(
-                        response.Content.ReadAsStream(), typeof(TelegramUpdateResponse));
+                        response.Content.ReadAsString(), typeof(TelegramUpdateResponse));
 
                 var problemDetails = telegramResponse.GetProblemDetails();
 
