@@ -5,15 +5,6 @@ on:
     branches: [ main ]
   
   workflow_dispatch:
-    inputs:
-      solution-folder:
-        description: 'Path to solution folder (e.g., ./src)'
-        required: false
-        default: '.'
-      run-settings:
-        description: 'Path to .runsettings file'
-        required: false
-        default: '.\\nanoFramework.Telegram.Bot.Tests\\nano.runsettings'
 
 jobs:
   run-tests:
@@ -25,7 +16,7 @@ jobs:
       - name: Run nanoFramework tests
         uses: CCSWE-nanoFramework/vstest-nanoframework@v1
         with:
-          solutionFolder: '.'
+          solutionFolder: ''
           runSettings: '.\\nanoFramework.Telegram.Bot.Tests\\nano.runsettings'
           artifactName: 'unit_test_results'
           artifactRetentionDays: 7
