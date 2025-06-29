@@ -13,7 +13,7 @@ on:
       run-settings:
         description: 'Path to .runsettings file'
         required: false
-        default: './nanoFramework.Telegram.Bot.Tests/nano.runsettings'
+        default: '.\nanoFramework.Telegram.Bot.Tests\nano.runsettings'
 
 jobs:
   run-tests:
@@ -25,7 +25,7 @@ jobs:
       - name: Run nanoFramework tests
         uses: CCSWE-nanoFramework/vstest-nanoframework@v1
         with:
-          solutionFolder: ${{ github.event.inputs.solution-folder || '.' }}
-          runSettings: ${{ github.event.inputs.run-settings || './nanoFramework.Telegram.Bot.Tests/nano.runsettings' }}
+          solutionFolder: '.'
+          runSettings: '.\nanoFramework.Telegram.Bot.Tests\nano.runsettings'
           artifactName: 'unit_test_results'
           artifactRetentionDays: 7
