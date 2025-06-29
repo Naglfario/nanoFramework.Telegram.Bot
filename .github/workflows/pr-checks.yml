@@ -7,8 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-tests:
+  build:
+
     runs-on: windows-latest
+
     steps:
     - uses: actions/checkout@v4 
       with:
@@ -49,12 +51,8 @@ jobs:
     - name: Build
       run: msbuild /p:Configuration=Release /p:Platform="Any CPU"
 
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Run nanoFramework tests
+    - name: nanoFramework Unit Tests
       uses: CCSWE-nanoFramework/vstest-nanoframework@v1
       with:
         runSettings: '.\nanoFramework.Telegram.Bot.Tests\nano.runsettings'
         artifactName: 'unit_test_results'
-        artifactRetentionDays: 7
