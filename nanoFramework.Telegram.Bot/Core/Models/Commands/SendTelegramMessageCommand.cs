@@ -18,7 +18,7 @@ namespace nanoFramework.Telegram.Bot.Core.Models.Commands
         /// Mode for parsing entities in the message text.
         /// Possible values: Markdown, MarkdownV2, Html
         /// </summary>
-        public string parse_mode { get; set; } = null;
+        public string parse_mode { get; set; } = string.Empty;
 
         /// <summary>
         /// Sends the message silently. Users will receive a notification with no sound.
