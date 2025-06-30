@@ -16,13 +16,13 @@
         /// Links tg://user?id=<user_id> can be used to mention a user by their 
         /// identifier without using a username, if this is allowed by their privacy settings.
         /// </summary>
-        public string url { get; set; } = null;
+        public string url { get; set; } = string.Empty;
 
         /// <summary>
         /// Optional. Data to be sent in a callback query to the bot when 
         /// the button is pressed, 1-64 bytes
         /// </summary>
-        public string callback_data { get; set; } = null;
+        public string callback_data { get; set; } = string.Empty;
 
         /// <summary>
         /// Optional. If set, pressing the button will prompt the user to select 
@@ -31,7 +31,7 @@
         /// in which case just the bot's username will be inserted. 
         /// Not supported for messages sent on behalf of a Telegram Business account.
         /// </summary>
-        public string switch_inline_query { get; set; } = null;
+        public string switch_inline_query { get; set; } = string.Empty;
 
         /// <summary>
         /// Optional. If set, pressing the button will insert the bot's username 
@@ -41,7 +41,7 @@
         /// in the same chat - good for selecting something from multiple options. 
         /// Not supported in channels and for messages sent on behalf of a Business account.
         /// </summary>
-        public string switch_inline_query_current_chat { get; set; } = null;
+        public string switch_inline_query_current_chat { get; set; } = string.Empty;
 
         /// <summary>
         /// Optional. Description of the button that copies the specified text to the clipboard.

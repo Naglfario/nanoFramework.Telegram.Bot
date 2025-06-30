@@ -29,13 +29,13 @@
         /// strikethrough, spoiler, and custom_emoji entities. The message will fail
         /// to send if the quote isn't found in the original message.
         /// </summary>
-        public string quote { get; set; } = null;
+        public string quote { get; set; } = string.Empty;
 
         /// <summary>
         /// Optional. Mode for parsing entities in the quote.
         /// Possible values: Markdown, MarkdownV2, Html
         /// </summary>
-        public string quote_parse_mode { get; set; } = null;
+        public string quote_parse_mode { get; set; } = string.Empty;
 
         /// <summary>
         /// Optional. Position of the quote in the original message in UTF-16 code units

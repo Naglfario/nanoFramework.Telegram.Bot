@@ -20,7 +20,7 @@
         /// Optional. The placeholder to be shown in the input field when
         /// the reply is active; 1-64 characters
         /// </summary>
-        public string input_field_placeholder { get; set; } = null;
+        public string input_field_placeholder { get; set; } = string.Empty;
 
         /// <summary>
         /// Optional. Use this parameter if you want to force reply from specific users only.
