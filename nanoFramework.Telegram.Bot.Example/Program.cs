@@ -52,8 +52,6 @@ namespace nanoFramework.Telegram.Bot.Example
             //telegram.Events.OnCallbackQuery += callbackReceiver.Receive;
             //telegram.ToggleCallbackDataUpdatesReceiving(true);
 
-            telegram.StartReceiving();
-
             if (!connectionTest.ok)
             {
                 Debug.WriteLine($"Telegram connection error");
@@ -63,6 +61,8 @@ namespace nanoFramework.Telegram.Bot.Example
                 WifiNetworkHelper.Disconnect();
                 return;
             }
+
+            telegram.StartReceiving();
 
             Thread.Sleep(Timeout.Infinite);
         }

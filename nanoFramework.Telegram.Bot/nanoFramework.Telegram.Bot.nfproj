@@ -22,6 +22,7 @@
     <Compile Include="Core\API\MessageSender.cs" />
     <Compile Include="Core\Models\Commands\SendTelegramMessageCommand.cs" />
     <Compile Include="Core\Models\GetMeResponse.cs" />
+    <Compile Include="Core\Models\GetUpdatesResult.cs" />
     <Compile Include="Core\Models\ITelegramResponse.cs" />
     <Compile Include="Core\Models\Problem\ErrorType.cs" />
     <Compile Include="Core\Models\Problem\ProblemDetails.cs" />

@@ -1,4 +1,6 @@
 ﻿using nanoFramework.Json;
+using nanoFramework.Telegram.Bot.Core.Models;
+using nanoFramework.Telegram.Bot.Core.Models.Problem;
 using nanoFramework.Telegram.Bot.Core.Models.Update;
 using nanoFramework.Telegram.Bot.Core.Providers;
 using nanoFramework.Telegram.Bot.Extensions;
@@ -32,70 +34,58 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
 
         public void Dispose()
         {
-            Stop();
+            StopPolling();
             _httpClient.Dispose();
             IsEnabled = false;
         }
 
-        public void Start()
+        public void StartPolling()
         {
             _timer ??= new Timer(TimerCallback,
             this, 0, _settings.PollDelayMilliseconds);
             IsEnabled = true;
         }
 
-        public void Stop()
+        public void StopPolling()
         {
             _timer?.Dispose();
             _timer = null;
             IsEnabled = false;
         }
 
-        public void UpdateDelay()
+        public void UpdatePollDelay()
         {
             if (_timer == null) return;
 
-            _timer.Change(0, _settings.PollDelayMilliseconds);
+            _timer.Change(_settings.PollDelayMilliseconds, _settings.PollDelayMilliseconds);
         }
 
         private static void TimerCallback(object state)
         {
             var receiver = (HttpUpdatesReceiver)state;
-            var longRunningThread = new Thread(receiver.GetUpdates);
+            var longRunningThread = new Thread(receiver.GetUpdatesPolling);
             longRunningThread.Start();
         }
 
-        private void GetUpdates()
+        private void GetUpdatesPolling()
         {
             try
             {
-                if (!_settings.TrackMessages && !_settings.TrackCallbackQuery) return;
+                var getUpdatesResult = SendGetUpdatesRequest();
 
-                var url = _urlProvider.GetUpdates(_lastSeenUpdateId);
-                using var response = _httpClient.Get(url);
-
-                if (!response.IsSuccessStatusCode)
+                if(getUpdatesResult.ProblemDetails != null)
                 {
-                    _events.RaiseError(response.GetProblemDetails());
+                    _events.RaiseError(getUpdatesResult.ProblemDetails);
 
                     return;
                 }
 
-                var telegramResponse = (TelegramUpdateResponse)JsonConvert.DeserializeObject(
-                        response.Content.ReadAsString(), typeof(TelegramUpdateResponse));
+                var telegramResponse = getUpdatesResult.RawUpdates;
 
-                var problemDetails = telegramResponse.GetProblemDetails();
-
-                if (problemDetails != null)
-                {
-                    _events.RaiseError(problemDetails);
-
+                if (telegramResponse == null ||
+                    telegramResponse.result == null ||
+                    telegramResponse.result.Length == 0)
                     return;
-                }
-
-                if (telegramResponse.result == null || telegramResponse.result.Length == 0) return;
-
-                _lastSeenUpdateId = telegramResponse.result[telegramResponse.result.Length - 1].update_id;
 
                 foreach (var update in telegramResponse.result)
                 {
@@ -108,6 +98,38 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
             catch (Exception ex)
             {
                 _events.RaiseError(new(ex));
+            }
+        }
+
+        internal GetUpdatesResult SendGetUpdatesRequest()
+        {
+            if (!_settings.TrackMessages && !_settings.TrackCallbackQuery)
+            {
+                return new GetUpdatesResult(new ProblemDetails(ErrorType.NothingToReceive));
+            }
+
+            try
+            {
+                var url = _urlProvider.GetUpdates(_lastSeenUpdateId);
+                using var response = _httpClient.Get(url);
+
+                var telegramResponse = (TelegramUpdateResponse)JsonConvert.DeserializeObject(
+                       response.Content.ReadAsString(), typeof(TelegramUpdateResponse));
+
+                var problemDetails = telegramResponse.GetProblemDetails();
+
+                if(problemDetails != null) return new GetUpdatesResult(problemDetails);
+
+                if (telegramResponse.result != null && telegramResponse.result.Length > 0)
+                {
+                    _lastSeenUpdateId = telegramResponse.result[telegramResponse.result.Length - 1].update_id;
+                }
+
+                return new GetUpdatesResult(telegramResponse);
+            }
+            catch(Exception ex)
+            {
+                return new GetUpdatesResult(new ProblemDetails(ex));
             }
         }
     }

@@ -41,6 +41,20 @@ namespace nanoFramework.Telegram.Bot.Core
 
             return _getMeReceiver.GetMe();
         }
+        
+        /// <summary>
+        /// Send single "getUpdates" request to Telegram API
+        /// </summary>
+        public GetUpdatesResult GetUpdates()
+        {
+            if (_updatesReceiver == null)
+            {
+                _updatesReceiver = new HttpUpdatesReceiver(
+                    Events, _settings, _urlProvider, _httpClient);
+            }
+
+            return _updatesReceiver.SendGetUpdatesRequest();
+        }
 
         /// <summary>
         /// Start receiving messages
@@ -57,7 +71,7 @@ namespace nanoFramework.Telegram.Bot.Core
                     Events, _settings, _urlProvider, _httpClient);
             }
 
-            _updatesReceiver.Start();
+            _updatesReceiver.StartPolling();
         }
 
         /// <summary>
@@ -67,7 +81,7 @@ namespace nanoFramework.Telegram.Bot.Core
         {
             if (_updatesReceiver == null || !_updatesReceiver.IsEnabled) return;
 
-            _updatesReceiver.Stop();
+            _updatesReceiver.StopPolling();
         }
 
         /// <summary>
@@ -76,7 +90,7 @@ namespace nanoFramework.Telegram.Bot.Core
         public void UpdatePollDelay(int newValue)
         {
             _settings.SetPollDelay(newValue);
-            _updatesReceiver.UpdateDelay();
+            _updatesReceiver.UpdatePollDelay();
         }
 
         /// <summary>
