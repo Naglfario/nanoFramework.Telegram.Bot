@@ -1,9 +1,7 @@
 ﻿using nanoFramework.Telegram.Bot.Core;
-using nanoFramework.Telegram.Bot.Core.API;
 using nanoFramework.Telegram.Bot.Core.Updates;
 using nanoFramework.Telegram.Bot.Tests.Fakes;
 using nanoFramework.TestFramework;
-using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -34,7 +32,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
             var httpClientProvider = new FakeHttpClientProvider(response);
             var target = new HttpUpdatesReceiver(events, settings, urlProvider, httpClientProvider);
 
-            target.Start();
+            target.StartPolling();
             Thread.Sleep(50);
 
             Assert.AreEqual("", errors, "Errors is not expected");
@@ -63,7 +61,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
             var httpClientProvider = new FakeHttpClientProvider(response);
             var target = new HttpUpdatesReceiver(events, settings, urlProvider, httpClientProvider);
 
-            target.Start();
+            target.StartPolling();
             Thread.Sleep(50);
 
             Assert.AreEqual("", errors, "Errors is not expected");
@@ -92,7 +90,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
             var httpClientProvider = new FakeHttpClientProvider(response);
             var target = new HttpUpdatesReceiver(events, settings, urlProvider, httpClientProvider);
 
-            target.Start();
+            target.StartPolling();
             Thread.Sleep(50);
 
             Assert.AreEqual(1, messageReceived);
@@ -121,7 +119,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
             var httpClientProvider = new FakeHttpClientProvider(response);
             var target = new HttpUpdatesReceiver(events, settings, urlProvider, httpClientProvider);
 
-            target.Start();
+            target.StartPolling();
             Thread.Sleep(50);
 
             Assert.AreEqual(0, messageReceived, "Messages is not expected");
@@ -150,7 +148,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
             var httpClientProvider = new FakeHttpClientProvider(response);
             var target = new HttpUpdatesReceiver(events, settings, urlProvider, httpClientProvider);
 
-            target.Start();
+            target.StartPolling();
             Thread.Sleep(50);
 
             Assert.AreEqual(0, messageReceived, "Messages is not expected");
@@ -178,7 +176,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
             var httpClientProvider = new FakeHttpClientProvider(null);
             var target = new HttpUpdatesReceiver(events, settings, urlProvider, httpClientProvider);
 
-            target.Start();
+            target.StartPolling();
             Thread.Sleep(50);
 
             Assert.AreEqual(0, messageReceived, "Messages is not expected");
@@ -209,7 +207,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
             var httpClientProvider = new FakeHttpClientProvider(httpResponseMessage);
             var target = new HttpUpdatesReceiver(events, settings, urlProvider, httpClientProvider);
 
-            target.Start();
+            target.StartPolling();
             Thread.Sleep(50);
 
             Assert.AreEqual(0, messageReceived, "Messages is not expected");
@@ -242,7 +240,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
                     var httpClientProvider = new FakeHttpClientProvider(httpResponseMessage);
                     var target = new HttpUpdatesReceiver(events, settings, urlProvider, httpClientProvider);
 
-                    target.Start();
+                    target.StartPolling();
                     Thread.Sleep(50);
 
                     Assert.AreEqual(0, messageReceived, "Messages is not expected");
