@@ -37,7 +37,11 @@ namespace nanoFramework.Telegram.Bot.Core.Models.Commands
 
         /// <summary>
         /// Additional interface options.
-        /// Can be <see cref="ForceReply"/> or <see cref="ReplyKeyboardMarkup"/> or null.
+        /// Can be:
+        /// <see cref="ForceReply"/> or 
+        /// <see cref="ReplyKeyboardMarkup"/> or 
+        /// <see cref="ReplyKeyboardRemove"/> or
+        /// <see cref="InlineKeyboardMarkup"/> or null.
         /// </summary>
         public IReplyMarkup reply_markup { get; set; } = null;
     }

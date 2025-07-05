@@ -7,6 +7,9 @@
     /// </summary>
     public class KeyboardButton
     {
+        public KeyboardButton(string buttonText) { text = buttonText; }
+        public KeyboardButton() { }
+
         /// <summary>
         /// Text of the button. If none of the optional fields are used,
         /// it will be sentas a message when the button is pressed

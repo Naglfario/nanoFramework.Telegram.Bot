@@ -1,6 +1,5 @@
 using nanoFramework.Networking;
 using nanoFramework.Telegram.Bot.Core;
-using nanoFramework.Telegram.Bot.Core.Models.Commands;
 using System.Device.Wifi;
 using System.Diagnostics;
 using System.Net.Http;
@@ -28,7 +27,6 @@ namespace nanoFramework.Telegram.Bot.Example
             }
 
             var httpClient = new HttpClient();
-            httpClient.SslProtocols = System.Net.Security.SslProtocols.Tls12;
 
             //Enabling certificates is mandatory. If you don't want to use them,
             //or if you want to use a self-signed certificate, use this:
@@ -36,35 +34,24 @@ namespace nanoFramework.Telegram.Bot.Example
             //Also you can insert your certificate chain to string variable and not use resource manager
             var certificates = Resources.GetString(Resources.StringResources.CertificatesTree);
             httpClient.HttpsAuthentCert = new X509Certificate(certificates);
+            httpClient.SslProtocols = System.Net.Security.SslProtocols.Tls12;
 
             var telegram = new TelegramBot(TelegramBotToken, httpClient);
+            var messageReceiver = new MessagesReceiver(telegram, MyTelegramId);
 
             telegram.Events.OnError += (details) =>
             {
                 Debug.WriteLine($"OnError: {details.Message}");
             };
-            telegram.Events.OnMessageReceived += (message) =>
-            {
-                Debug.WriteLine($"OnMessageReceived: {message.text}");
-                if (message.from.id == MyTelegramId)
-                {
-                    var replyCommand = new SendTelegramMessageCommand()
-                    {
-                        chat_id = message.chat.id,
-                        text = "Hello, master!",
-                        reply_parameters = new Core.Models.ReplyMarkup.ReplyParameters
-                        {
-                            chat_id = message.chat.id,
-                            message_id = message.message_id,
-                            quote = message.text,
-                            quote_parse_mode = "Markdown"
-                        }
-                    };
-                    telegram.Send(replyCommand);
-                }
-            };
+            telegram.Events.OnMessageReceived += messageReceiver.Receive;
 
             var connectionTest = telegram.CheckConnection();
+
+            // use callback data updates only if you want to work with inline buttons
+            //var callbackReceiver = new CallbackReceiver(telegram, MyTelegramId);
+            //telegram.Events.OnCallbackQuery += callbackReceiver.Receive;
+            //telegram.ToggleCallbackDataUpdatesReceiving(true);
+
             telegram.StartReceiving();
 
             if (!connectionTest.ok)
