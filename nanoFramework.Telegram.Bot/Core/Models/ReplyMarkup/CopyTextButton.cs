@@ -6,6 +6,7 @@
     public class CopyTextButton
     {
         public CopyTextButton(string textToClipboard) => text = textToClipboard;
+        public CopyTextButton() { }
 
         /// <summary>
         /// The text to be copied to the clipboard; 1-256 characters

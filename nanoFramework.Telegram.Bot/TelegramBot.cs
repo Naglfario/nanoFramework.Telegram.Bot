@@ -98,7 +98,7 @@ namespace nanoFramework.Telegram.Bot.Core
         /// It will works after call <see cref="StartReceiving"/> method
         /// </summary>
         public void ToggleCallbackDataUpdatesReceiving(bool newState)
-            => _settings.SetTrackMessagesValue(newState);
+            => _settings.SetTrackCallbackQueryValue(newState);
 
         /// <summary>
         /// Notify about message sending errors via events?
