@@ -21,8 +21,8 @@ using [Wifi](https://github.com/nanoframework/System.Device.Wifi) library:
 ```csharp
 const string wifiSSID = "YourSSID";
 const string wifiPass = "YourWifiPassword";
- var isWifiConnected = WifiNetworkHelper.ConnectDhcp(wifiSSID, wifiPass,
- WifiReconnectionKind.Automatic, true, 0, CancellationToken.None);
+var isWifiConnected = WifiNetworkHelper.ConnectDhcp(wifiSSID, wifiPass,
+WifiReconnectionKind.Automatic, true, 0, CancellationToken.None);
 
 if(!isWifiConnected)
 {
@@ -195,7 +195,7 @@ So, you can create methods for each event and pass it like this:
 ```csharp
 public static void Main()
 {
-	// settings were omitted for the sake of compactness of the example, but they are necessary
+    // settings were omitted for the sake of compactness of the example, but they are necessary
     var bot = new TelegramBot(TelegramBotToken, httpClient);
     bot.Events.OnMessageReceived += Receive;
     bot.StartReceiving();
@@ -205,7 +205,7 @@ public static void Main()
 
 public void Receive(TelegramMessage message)
 {
-	long adminId = 1234567890;
+    long adminId = 1234567890;
     if (message.from.id != adminId) return;
 
     if (!message.text.StartsWith("/"))
@@ -213,9 +213,9 @@ public void Receive(TelegramMessage message)
         // it's not a command
     }
     else
-	{
-		// it's a command, handle it!
-	}
+    {
+        // it's a command, handle it!
+    }
 }
 ```
 
