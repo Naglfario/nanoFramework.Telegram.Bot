@@ -41,6 +41,20 @@ namespace nanoFramework.Telegram.Bot.Core
 
             return _getMeReceiver.GetMe();
         }
+        
+        /// <summary>
+        /// Send single "getUpdates" request to Telegram API
+        /// </summary>
+        public GetUpdatesResult GetUpdates()
+        {
+            if (_updatesReceiver == null)
+            {
+                _updatesReceiver = new HttpUpdatesReceiver(
+                    Events, _settings, _urlProvider, _httpClient);
+            }
+
+            return _updatesReceiver.SendGetUpdatesRequest();
+        }
 
         /// <summary>
         /// Send message
