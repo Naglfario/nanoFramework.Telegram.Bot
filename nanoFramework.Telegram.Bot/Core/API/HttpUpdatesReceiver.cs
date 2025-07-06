@@ -148,37 +148,5 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
             var url = _urlProvider.AnswerCallbackQuery(callbackId);
             using var response = _httpClient.Get(url);
         }
-
-        internal GetUpdatesResult SendGetUpdatesRequest()
-        {
-            if (!_settings.TrackMessages && !_settings.TrackCallbackQuery)
-            {
-                return new GetUpdatesResult(new ProblemDetails(ErrorType.NothingToReceive));
-            }
-
-            try
-            {
-                var url = _urlProvider.GetUpdates(_lastSeenUpdateId);
-                using var response = _httpClient.Get(url);
-
-                var telegramResponse = (TelegramUpdateResponse)JsonConvert.DeserializeObject(
-                       response.Content.ReadAsString(), typeof(TelegramUpdateResponse));
-
-                var problemDetails = telegramResponse.GetProblemDetails();
-
-                if(problemDetails != null) return new GetUpdatesResult(problemDetails);
-
-                if (telegramResponse.result != null && telegramResponse.result.Length > 0)
-                {
-                    _lastSeenUpdateId = telegramResponse.result[telegramResponse.result.Length - 1].update_id;
-                }
-
-                return new GetUpdatesResult(telegramResponse);
-            }
-            catch(Exception ex)
-            {
-                return new GetUpdatesResult(new ProblemDetails(ex));
-            }
-        }
     }
 }
