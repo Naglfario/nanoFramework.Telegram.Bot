@@ -8,17 +8,21 @@ namespace nanoFramework.Telegram.Bot.Tests.Fakes
         private readonly string _getMe;
         private readonly string _getUpdates;
         private readonly string _sendMessages;
+        private readonly string _answerCallbackQuery;
 
         public FakeURLProvider(
             string getMe = "",
             string getUpdates = "",
-            string sendMessage = "")
+            string sendMessage = "",
+            string answerCallbackQuery = "")
         {
             _getMe = getMe;
             _getUpdates = getUpdates;
             _sendMessages = sendMessage;
+            _answerCallbackQuery = answerCallbackQuery;
         }
 
+        public string AnswerCallbackQuery(string callbackId) => _answerCallbackQuery;
         public string GetMe() => _getMe;
         public string GetUpdates(long lastSeenUpdateId) => _getUpdates;
         public string SendMessage(SendTelegramMessageCommand command) => _sendMessages;

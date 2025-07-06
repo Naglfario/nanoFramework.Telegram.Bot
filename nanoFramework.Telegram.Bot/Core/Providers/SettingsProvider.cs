@@ -30,6 +30,9 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
         /// <inheritdoc/>
         public bool UseEventsForSendFailures { get; private set; } = false;
 
+        /// <inheritdoc/>
+        public bool AnswerCallbackQuery { get; private set; } = true;
+
         internal void SetPollDelay(int delay)
         {
             if(delay < 0)
@@ -72,9 +75,8 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
             }
         }
 
-        internal void SetUseEventsForSendFailures(bool newState)
-        {
-            UseEventsForSendFailures = newState;
-        }
+        internal void SetUseEventsForSendFailures(bool newState) => UseEventsForSendFailures = newState;
+
+        internal void SetAnswerCallbackQuery(bool newState) => AnswerCallbackQuery = newState;
     }
 }

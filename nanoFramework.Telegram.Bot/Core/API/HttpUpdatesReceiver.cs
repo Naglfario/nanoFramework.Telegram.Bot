@@ -91,7 +91,7 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
                 {
                     if (update.message != null)
                         _events.RaiseMessageReceived(update.message);
-                    else if(update.callback_query != null)
+                    else if (update.callback_query != null)
                         _events.RaiseCallbackReceived(update.callback_query);
                 }
             }
@@ -123,6 +123,16 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
                 if (telegramResponse.result != null && telegramResponse.result.Length > 0)
                 {
                     _lastSeenUpdateId = telegramResponse.result[telegramResponse.result.Length - 1].update_id;
+                    if(_settings.AnswerCallbackQuery)
+                    {
+                        foreach(var update in telegramResponse.result)
+                        {
+                            if (update.callback_query != null)
+                            {
+                                SendAnswerCallbackQuery(update.callback_query.id);
+                            }
+                        }
+                    }
                 }
 
                 return new GetUpdatesResult(telegramResponse);
@@ -131,6 +141,12 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
             {
                 return new GetUpdatesResult(new ProblemDetails(ex));
             }
+        }
+
+        private void SendAnswerCallbackQuery(string callbackId)
+        {
+            var url = _urlProvider.AnswerCallbackQuery(callbackId);
+            using var response = _httpClient.Get(url);
         }
     }
 }

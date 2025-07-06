@@ -188,5 +188,20 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.Providers
 
             Assert.Contains($"&limit={settings.UpdatesLimitPerRequest}", act);
         }
+
+        [TestMethod]
+        [DataRow("890000000000000000")]
+        [DataRow("test")]
+        public void AnswerCallbackQuery_ShouldBeCorrect(string callbackId)
+        {
+            var settings = new FakeSettingsProvider();
+            var target = new URLProvider(settings);
+
+            var act = target.AnswerCallbackQuery(callbackId);
+
+            Assert.AreEqual(
+                $"https://api.telegram.org/bot{settings.Token}/answerCallbackQuery?callback_query_id={callbackId}",
+                act);
+        }
     }
 }

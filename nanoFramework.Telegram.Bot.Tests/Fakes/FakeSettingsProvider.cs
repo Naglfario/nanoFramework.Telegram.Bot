@@ -15,5 +15,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Fakes
         public bool TrackCallbackQuery { get; set; } = false;
 
         public bool UseEventsForSendFailures { get; set; } = false;
+
+        public bool AnswerCallbackQuery { get; set; } = true;
     }
 }

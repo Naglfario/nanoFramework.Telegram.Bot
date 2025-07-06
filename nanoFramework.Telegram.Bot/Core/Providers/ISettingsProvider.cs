@@ -32,5 +32,10 @@
         /// Notify about message sending errors via events
         /// </summary>
         public bool UseEventsForSendFailures { get; }
+
+        /// <summary>
+        /// Automatically use endpoint "answerCallbackQuery" to answer on all callback queries
+        /// </summary>
+        public bool AnswerCallbackQuery { get; }
     }
 }

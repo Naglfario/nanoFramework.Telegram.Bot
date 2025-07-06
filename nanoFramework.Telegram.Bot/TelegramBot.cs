@@ -41,7 +41,17 @@ namespace nanoFramework.Telegram.Bot.Core
 
             return _getMeReceiver.GetMe();
         }
-        
+
+        /// <summary>
+        /// Send message
+        /// </summary>
+        public SendResult Send(SendTelegramMessageCommand command)
+        {
+            _sender ??= new MessageSender(Events, _urlProvider, _httpClient, _settings);
+
+            return _sender.Send(command);
+        }
+
         /// <summary>
         /// Send single "getUpdates" request to Telegram API
         /// </summary>
@@ -122,14 +132,15 @@ namespace nanoFramework.Telegram.Bot.Core
             => _settings.SetUseEventsForSendFailures(newState);
 
         /// <summary>
-        /// Send message
+        /// If you do not receive callback queries(clicks to inline buttons),
+        /// then this setting useless for you.
+        /// For others, this setting controls whether the bot will automatically
+        /// send a telegram signaling that it has received a query callback when it receives one.
+        /// Default: true
         /// </summary>
-        public SendResult Send(SendTelegramMessageCommand command)
-        {
-            _sender ??= new MessageSender(Events, _urlProvider, _httpClient, _settings);
-
-            return _sender.Send(command);
-        }
+        /// <param name="newState"></param>
+        public void ToggleAnswerCallbackQuery(bool newState)
+            => _settings.SetAnswerCallbackQuery(newState);
 
         public void Dispose()
         {

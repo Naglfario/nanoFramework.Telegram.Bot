@@ -7,5 +7,6 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
         public string GetUpdates(long lastSeenUpdateId);
         public string SendMessage(SendTelegramMessageCommand command);
         public string GetMe();
+        public string AnswerCallbackQuery(string callbackId);
     }
 }
