@@ -43,3 +43,4 @@ jobs:
           previewPackages: false
           solutionsToCheck: 'nanoFramework.Telegram.Bot.sln'
           gitHubAuth: '${{ secrets.NAIL_TOKEN }}'
+          useTokenForClone: true
