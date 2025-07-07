@@ -35,7 +35,7 @@ jobs:
           previewPackages: false
           solutionsToCheck: 'nanoFramework.Telegram.Bot.sln'
           nugetConfig: 'nuget.config'
-          gitHubAuth: '${{ secrets.PR_TOKEN }}'
+          gitHubAuth: '${{ secrets.PR_SECRET }}'
           #gitHubUser: '${{ secrets.NAIL_USER }}'
           #gitHubEmail: '${{ secrets.NAIL_EMAIL }}'
           #repoOwner: 'NailOfNaglfar'
