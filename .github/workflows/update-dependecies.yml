@@ -1,7 +1,8 @@
 name: Daily update dependencies
 
-on:
+on: 
   schedule:
+  # At 00:00 UTC every day.
   - cron:  '0 0 * * *'
   repository_dispatch:
     types: update-dependencies
@@ -12,23 +13,35 @@ defaults:
     shell: pwsh
 
 jobs:
-  update-nuget-dependencies:
+  dependencies-update:
     name: Update .NET nanoFramework dependencies
-    timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
+    timeout-minutes: 15
     runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Update dependencies
-        uses: nanoframework/nanodu@v1.0.26
-        env:
-          GITHUB_TOKEN: ${{ secrets.NAIL_TOKEN }}
-          GITHUB_AUTH: ${{ secrets.NAIL_TOKEN }}
+      - name: Install NuGet client
+        uses: nuget/setup-nuget@v2.0.1
         with:
+          nuget-version: 'latest'
+          
+      - name: Set branch environment variable
+        run: |
+          $tagName = "${{ github.ref_name }}"
+          if (([string]::IsNullOrEmpty($tagName)))
+          {
+             $tagName = "master"
+          }
+          echo "targetBranch=$tagName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+        shell: pwsh # Explicitly use PowerShell Core (default on windows-latest for 'run')
+
+      - uses: nanoframework/nanodu@v1.0.26
+        env:
+          GITHUB_TOKEN: ${{ secrets.PR_SECRET }}
+          GITHUB_AUTH: ${{ secrets.PR_SECRET }}
+        with:
+          previewPackages: false
           solutionsToCheck: 'nanoFramework.Telegram.Bot.sln'
-          #gitHubUser: ${{ secrets.NAIL_USER }}
-          #gitHubEmail: ${{ secrets.NAIL_EMAIL }}
+          nugetConfig: 'nuget.config'
           gitHubAuth: '${{ env.GITHUB_AUTH }}'
-          branchToPr: 'test'
-          #repoOwner: 'Naglfario'
-          #useTokenForClone: true
+          branchToPr: '${{ env.targetBranch }}'
