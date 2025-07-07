@@ -38,5 +38,5 @@ jobs:
           gitHubAuth: '${{ secrets.NAIL_TOKEN }}'
           gitHubUser: '${{ secrets.NAIL_USER }}'
           gitHubEmail: '${{ secrets.NAIL_EMAIL }}'
-          repoOwner: 'Naglfario'
+          repoOwner: 'NailOfNaglfar'
           useTokenForClone: true
