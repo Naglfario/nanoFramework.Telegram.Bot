@@ -8,6 +8,10 @@ on:
     types: update-dependencies
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 defaults:
   run:
     shell: pwsh
@@ -24,25 +28,12 @@ jobs:
         uses: nuget/setup-nuget@v2.0.1
         with:
           nuget-version: 'latest'
-          
-      - name: Set branch environment variable
-        run: |
-          $tagName = "${{ github.ref_name }}"
-          if (([string]::IsNullOrEmpty($tagName)))
-          {
-             $tagName = "master"
-          }
-          echo "targetBranch=$tagName" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-        shell: pwsh # Explicitly use PowerShell Core (default on windows-latest for 'run')
-
-      - uses: nanoframework/nanodu@v1
+      - uses: nanoframework/nanodu@v1.0.26
         env:
           GITHUB_TOKEN: ${{ secrets.PR_SECRET }}
-          GITHUB_AUTH: ${{ secrets.PR_SECRET }}
         with:
           previewPackages: false
           solutionsToCheck: 'nanoFramework.Telegram.Bot.sln'
           nugetConfig: 'nuget.config'
-          gitHubAuth: '${{ env.GITHUB_AUTH }}'
-          branchToPr: '${{ env.targetBranch }}'
+          gitHubAuth: '${{ secrets.PR_SECRET }}'
           useTokenForClone: true
