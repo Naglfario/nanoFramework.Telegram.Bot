@@ -2,7 +2,7 @@ name: Daily update dependencies
 
 on:
   schedule:
-  - cron:  '20 00 * * Mon,Thu'
+  - cron:  '0 0 * * *'
   repository_dispatch:
     types: update-dependencies
   workflow_dispatch:
@@ -29,5 +29,6 @@ jobs:
           gitHubUser: ${{ secrets.NAIL_USER }}
           gitHubEmail: ${{ secrets.NAIL_EMAIL }}
           gitHubAuth: ${{ secrets.NAIL_TOKEN }}
-          branchToPr: 'test'
+          #branchToPr: 'test'
           repoOwner: 'Naglfario'
+          useTokenForClone: true
