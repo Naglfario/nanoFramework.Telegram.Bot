@@ -20,7 +20,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Update dependencies
-        uses: nanoframework/nanodu@v1
+        uses: nanoframework/nanodu@v1.0.25
+        env:
+          GITHUB_TOKEN: ${{ secrets.NAIL_TOKEN }}
+          GITHUB_AUTH: ${{ secrets.NAIL_TOKEN }}
         with:
           solutionsToCheck: 'nanoFramework.Telegram.Bot.sln'
           gitHubUser: ${{ secrets.NAIL_USER }}
