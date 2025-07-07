@@ -25,3 +25,8 @@ jobs:
         uses: nanoframework/nanodu@v1
         with:
           solutionsToCheck: 'nanoFramework.Telegram.Bot.sln'
+          gitHubUser: ${{ secrets.NAIL_USER }}
+          gitHubEmail: ${{ secrets.NAIL_EMAIL }}
+          gitHubAuth: ${{ secrets.NAIL_TOKEN }}
+          repoOwner: 'Naglfario'
+          useTokenForClone: true
