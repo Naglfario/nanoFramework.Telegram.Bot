@@ -36,7 +36,7 @@ jobs:
           solutionsToCheck: 'nanoFramework.Telegram.Bot.sln'
           nugetConfig: 'nuget.config'
           gitHubAuth: '${{ secrets.NAIL_TOKEN }}'
-          gitHubUser: '${{ secrets.NAIL_USER }}'
-          gitHubEmail: '${{ secrets.NAIL_EMAIL }}'
-          repoOwner: 'NailOfNaglfar'
+          #gitHubUser: '${{ secrets.NAIL_USER }}'
+          #gitHubEmail: '${{ secrets.NAIL_EMAIL }}'
+          #repoOwner: 'NailOfNaglfar'
           useTokenForClone: true
