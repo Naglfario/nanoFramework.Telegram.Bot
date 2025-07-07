@@ -16,8 +16,6 @@ jobs:
     name: Update .NET nanoFramework dependencies
     timeout-minutes: 180 # Non default as IoT devices has lots of solutions to update!
     runs-on: windows-latest
-    env:
-      GITHUB_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
