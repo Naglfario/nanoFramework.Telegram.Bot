@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 jobs:
-  build:
+  release:
 
     runs-on: windows-latest
 
@@ -59,4 +59,4 @@ jobs:
       run: nuget pack nanoFramework.Telegram.Bot.nuspec -properties version="${{env.VERSION}}"
       
     - name: Push Package to NuGet.org
-      run: nuget push nanoFramework.Telegram.Bot.${{env.VERSION}}.nupkg -ApiKey ${{secrets.NUGET_API_KEY}} -src https://api.nuget.org/v3/index.json
+      run: nuget push Naglfario.NanoFramework.Telegram.Bot.${{env.VERSION}}.nupkg -ApiKey ${{secrets.NUGET_API_KEY}} -src https://api.nuget.org/v3/index.json
