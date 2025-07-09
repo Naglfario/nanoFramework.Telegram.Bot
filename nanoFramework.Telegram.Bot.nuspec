@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>nanoFramework.Telegram.Bot</id>
+    <version>$version$</version>
+    <title>nanoFramework.Telegram.Bot</title>
+    <authors>Naglfario</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE</license>
+    <releaseNotes>
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <developmentDependency>false</developmentDependency>
+    <projectUrl>https://github.com/Naglfario/nanoFramework.Telegram.Bot</projectUrl>
+    <icon>images\logo_v1_500.png</icon>
+    <repository type="git" url="https://github.com/Naglfario/nanoFramework.Telegram.Bot" commit="$commit$" />
+    <copyright>Copyright (c) Naglfario and Contributors</copyright>
+    <description>This package is Telegram Bot client for .NET nanoFramework with basic features only</description>
+    <tags>nanoFramework C# csharp Telegram tg bot client</tags>
+    <dependencies>
+      <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
+      <dependency id="nanoFramework.Json" version="2.2.203" />
+      <dependency id="nanoFramework.System.Net.Http" version="1.5.196" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="nanoFramework.Telegram.Bot\bin\Release\nanoFramework.Telegram.Bot.dll" target="lib\nanoFramework.Telegram.Bot.dll" />
+    <file src="nanoFramework.Telegram.Bot\bin\Release\nanoFramework.Telegram.Bot.pdb" target="lib\nanoFramework.Telegram.Bot.pdb" />
+    <file src="nanoFramework.Telegram.Bot\bin\Release\nanoFramework.Telegram.Bot.pdbx" target="lib\nanoFramework.Telegram.Bot.pdbx" />
+    <file src="nanoFramework.Telegram.Bot\bin\Release\nanoFramework.Telegram.Bot.pe" target="lib\nanoFramework.Telegram.Bot.pe" />
+    <file src="nanoFramework.Telegram.Bot\bin\Release\nanoFramework.Telegram.Bot.xml" target="lib\nanoFramework.Telegram.Bot.xml" />
+    <file src="README.md" target="docs" />
+    <file src="assets\logo_v1_500.png" target="images" />
+    <file src="LICENSE" target="" />
+  </files>
+</package>
