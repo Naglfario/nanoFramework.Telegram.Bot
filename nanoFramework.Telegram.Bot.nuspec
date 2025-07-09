@@ -6,7 +6,7 @@
     <title>nanoFramework.Telegram.Bot</title>
     <authors>Naglfario</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="file">LICENSE</license>
+    <license type="file">LICENSE.md</license>
     <releaseNotes>
     </releaseNotes>
     <readme>docs\README.md</readme>
@@ -30,6 +30,6 @@
     <file src="nanoFramework.Telegram.Bot\bin\Release\nanoFramework.Telegram.Bot.pe" target="lib\nanoFramework.Telegram.Bot.pe" />
     <file src="README.md" target="docs" />
     <file src="assets\logo_v1_500.png" target="images" />
-    <file src="LICENSE" target="" />
+    <file src="LICENSE.md" target="" />
   </files>
 </package>
