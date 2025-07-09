@@ -5,14 +5,9 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CSharp.TestApplication")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CSharp.TestApplication")]
-[assembly: AssemblyCopyright("Copyright ©  2025")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyTitle("nanoFramework.Telegram.Bot")]
+[assembly: AssemblyProduct("nanoFramework.Telegram.Bot")]
+[assembly: AssemblyCopyright("Copyright © Naglfraio and Contributors 2025")]
 [assembly: InternalsVisibleTo("NFUnitTest")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
