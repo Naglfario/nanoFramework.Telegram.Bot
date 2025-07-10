@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("nanoFramework.Telegram.Bot")]
 [assembly: AssemblyProduct("nanoFramework.Telegram.Bot")]
-[assembly: AssemblyCopyright("Copyright © Naglfraio and Contributors 2025")]
+[assembly: AssemblyCopyright("Copyright © Naglfario and Contributors")]
 [assembly: InternalsVisibleTo("NFUnitTest")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
