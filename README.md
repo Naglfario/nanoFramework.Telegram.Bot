@@ -7,16 +7,16 @@ This client provides convenient access to the main functions of the Telegram Bot
 
 Perhaps in the future, more methods for updating and deleting messages will be added,
 but this is not certain. Basically, bots on embeded devices are needed to
-control these devices, and for this, the simplest functions should be enough.
+control these devices and for this the simplest functions should be enough.
 
 # Getting started
 
 ## Environment preparing
 
-You can read more about usage examples in the Example project.
+You can see more examples in the [Example project](https://github.com/Naglfario/nanoFramework.Telegram.Bot/tree/main/nanoFramework.Telegram.Bot.Example).
 
 First, you need to connect to the Internet. You can do this, for example,
-using [Wifi](https://github.com/nanoframework/System.Device.Wifi) library:
+using [Wifi library](https://github.com/nanoframework/System.Device.Wifi):
 
 ```csharp
 const string wifiSSID = "YourSSID";
@@ -60,7 +60,7 @@ MIIE0DCCA7igAwIBAgIBBzANBgkqhkiG9w0BAQsFADCBgzELMAkGA1UEBhMCVVMx
 
 So, you can paste it as string variable to your code, or you can add it to
 [managed resources](https://github.com/nanoframework/nanoFramework.ResourceManager)
-as text file and get it in code. I'll give you an example with managed resources:
+as text file and work with it as with string variable. I'll give you an example with managed resources:
 
 
 ```csharp
@@ -82,11 +82,11 @@ httpClient.SslVerification = System.Net.Security.SslVerification.NoVerification;
 ## Creating an Telegram Client
 
 To create a client class you need http client created on previous step and
-a Bot Token, you can get it from [Bot Father](https://t.me/BotFather):
+a Bot Token, you can get it from the [Bot Father](https://t.me/BotFather):
 
 ```csharp
 var token = "1234567890:0KLRiyDQv9C40LTQvtGAISEhISEhISEhISEhISEh";
-var bot = new TelegramBot(TelegramBotToken, httpClient);
+var bot = new TelegramBot(token, httpClient);
 ```
 
 
@@ -125,7 +125,7 @@ if (!connectionTest.ok)
 }
 ```
 
-This will result in the send of a `getMe` request to the Telegram API,
+This is a simplified `getMe` endpoint of Telegram API,
 and you will receive a comprehensive answer whether everything is OK.
 And if something went wrong, you will be able to see the reason.
 
