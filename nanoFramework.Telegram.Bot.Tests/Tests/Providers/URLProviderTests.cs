@@ -68,15 +68,58 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.Providers
             Assert.Contains($"&protect_content={command.protect_content}", act);
             Assert.Contains($"&protect_content={command.protect_content}", act);
             Assert.DoesNotContains("\n", act);
-            Assert.Contains($"\"message_id\":{command.reply_parameters.message_id}", act);
-            Assert.Contains($"\"chat_id\":{command.reply_parameters.chat_id}", act);
-            Assert.Contains($"\"allow_sending_without_reply\":{command.reply_parameters.allow_sending_without_reply.ToString().ToLower()}", act);
-            Assert.Contains($"\"quote\":\"{command.reply_parameters.quote}\"", act);
-            Assert.Contains($"\"quote_parse_mode\":\"{command.reply_parameters.quote_parse_mode}\"", act);
-            Assert.Contains($"\"quote_position\":{command.reply_parameters.quote_position}", act);
-            Assert.Contains($"\"force_reply\":{forceReply.force_reply.ToString().ToLower()}", act);
-            Assert.Contains($"\"input_field_placeholder\":\"{forceReply.input_field_placeholder}\"", act);
-            Assert.Contains($"\"selective\":{forceReply.selective.ToString().ToLower()}", act);
+            Assert.Contains($"message_id%22%3A{command.reply_parameters.message_id}", act);
+            Assert.Contains($"chat_id%22%3A{command.reply_parameters.chat_id}", act);
+            Assert.Contains($"allow_sending_without_reply%22%3A{command.reply_parameters.allow_sending_without_reply.ToString().ToLower()}", act);
+            Assert.Contains($"quote%22%3A%22{command.reply_parameters.quote}", act);
+            Assert.Contains($"quote_parse_mode%22%3A%22{command.reply_parameters.quote_parse_mode}", act);
+            Assert.Contains($"quote_position%22%3A{command.reply_parameters.quote_position}", act);
+            Assert.Contains($"force_reply%22%3A{forceReply.force_reply.ToString().ToLower()}", act);
+            Assert.Contains($"input_field_placeholder%22%3A%22{forceReply.input_field_placeholder}", act);
+            Assert.Contains($"selective%22%3A{forceReply.selective.ToString().ToLower()}", act);
+        }
+
+        [TestMethod]
+        public void SendMessage_WithLineBreakChar_ShouldBeEncoded()
+        {
+            var settings = new FakeSettingsProvider();
+            var target = new URLProvider(settings);
+            var command = new SendTelegramMessageCommand()
+            {
+                chat_id = 1,
+                text = "hello \n world"
+            };
+
+            var act = target.SendMessage(command);
+
+            Assert.DoesNotContains("hello \n world", act);
+            Assert.Contains("hello+%0A+world", act);
+        }
+
+        [TestMethod]
+        public void SendMessage_SecondTimeUse_ShouldNotBeEncodedTwice()
+        {
+            var settings = new FakeSettingsProvider();
+            var target = new URLProvider(settings);
+            var command = new SendTelegramMessageCommand()
+            {
+                chat_id = 1,
+                text = "hello \n world",
+                reply_parameters = new ReplyParameters()
+                {
+                    message_id = 123,
+                    chat_id = 322,
+                    quote = "space test",
+                },
+            };
+
+            var firstAct = target.SendMessage(command);
+            var secondAct = target.SendMessage(command);
+
+            Assert.DoesNotContains("hello \n world", secondAct);
+            Assert.Contains("hello+%0A+world", secondAct);
+            Assert.DoesNotContains("space test", secondAct);
+            Assert.Contains("space+test", secondAct);
         }
 
         [TestMethod]

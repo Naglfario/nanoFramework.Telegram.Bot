@@ -1,6 +1,8 @@
 ﻿using nanoFramework.Json;
 using nanoFramework.Telegram.Bot.Core.Models.Commands;
+using nanoFramework.Telegram.Bot.Core.Models.ReplyMarkup;
 using System.Text;
+using System.Web;
 
 namespace nanoFramework.Telegram.Bot.Core.Providers
 {
@@ -73,7 +75,8 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
             sb.Append(_settings.Token);
             sb.Append(SendMessageRoute);
             sb.Append(ChatIdParam); sb.Append(command.chat_id);
-            sb.Append(TextParam); sb.Append(command.text);
+            var encodedText = HttpUtility.UrlEncode(command.text);
+            sb.Append(TextParam); sb.Append(encodedText);
             sb.Append(DisableNotificationParam); sb.Append(command.disable_notification);
             sb.Append(ProtectContentParam); sb.Append(command.protect_content);
 
@@ -84,14 +87,24 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
 
             if (command.reply_parameters != null)
             {
+                sb.Append(ReplyParametersParam);
                 var replyParametersJson = JsonSerializer.SerializeObject(command.reply_parameters, false);
-                sb.Append(ReplyParametersParam); sb.Append(replyParametersJson);
+                if (!string.IsNullOrEmpty(command.reply_parameters.quote))
+                {
+                    var encodedReplyParametersJson = HttpUtility.UrlEncode(replyParametersJson);
+                    sb.Append(encodedReplyParametersJson);
+                }
+                else
+                {
+                    sb.Append(replyParametersJson);
+                }
             }
 
             if (command.reply_markup != null)
             {
                 var replyMarkupJson = JsonSerializer.SerializeObject(command.reply_markup, false);
-                sb.Append(ReplyMarkupParam); sb.Append(replyMarkupJson);
+                var encodedReplyMarkupJson = HttpUtility.UrlEncode(replyMarkupJson);
+                sb.Append(ReplyMarkupParam); sb.Append(encodedReplyMarkupJson);
             }
 
             return sb.ToString();
