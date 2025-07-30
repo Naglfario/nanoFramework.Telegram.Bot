@@ -325,6 +325,18 @@ you might want to receive error messages via the event system (`bot.Events.OnErr
 bot.ToggleUseEventsForSendFailures(true);
 ```
 
+### Disable or enable unicode parsing from Telegram updates
+
+When reading a response from Telegram, HttpClient presents some symbols
+(emoji, extended litany alphabet, Cyrillic, Arabic ligature, etc)
+as a unicode string (for example: \u0442\u044b \u043f\u0438\u0434\u043e\u0440\u0440).
+Sometimes this can interfere with JSON parsing. To fix this, activate
+this option (decoding is disabled by default)
+
+```csharp
+bot.ToggleDecodeUnicode(true);
+```
+
 ## Q & A
 
 ### Q: Why do some property names look so strange? Why for example is the name `callback_data` used instead of `CallbackData`?

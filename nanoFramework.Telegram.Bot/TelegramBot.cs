@@ -36,7 +36,7 @@ namespace nanoFramework.Telegram.Bot.Core
         {
             if(_getMeReceiver == null)
             {
-                _getMeReceiver = new GetMeReceiver(_urlProvider, _httpClient);
+                _getMeReceiver = new GetMeReceiver(_urlProvider, _httpClient, _settings);
             }
 
             return _getMeReceiver.GetMe();
@@ -138,9 +138,17 @@ namespace nanoFramework.Telegram.Bot.Core
         /// send a telegram signaling that it has received a query callback when it receives one.
         /// Default: true
         /// </summary>
-        /// <param name="newState"></param>
         public void ToggleAnswerCallbackQuery(bool newState)
             => _settings.SetAnswerCallbackQuery(newState);
+
+        /// <summary>
+        /// If you use characters that HttpClient represents as a unicode string
+        /// (these can be emoticons, extended Latin characters, Cyrillic, Arabic alphabets, etc.),
+        /// you should use this option to ensure that parsing of the response is successful.
+        /// Default: false
+        /// </summary>
+        public void ToggleDecodeUnicode(bool newState)
+            => _settings.SetDecodeUnicode(newState);
 
         public void Dispose()
         {

@@ -28,7 +28,7 @@
         IncorrectPollDelay,
 
         /// <summary>
-        /// Both available update types (messages & callback data) are disabled.
+        /// Both available update types (messages and callback data) are disabled.
         /// </summary>
         NothingToReceive,
 

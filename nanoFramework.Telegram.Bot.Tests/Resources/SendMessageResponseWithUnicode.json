@@ -1,0 +1,21 @@
+﻿{
+  "ok": true,
+  "result": {
+    "message_id": 616,
+    "from": {
+      "id": 1070000000,
+      "is_bot": true,
+      "first_name": "My bot",
+      "username": "my_bot"
+    },
+    "chat": {
+      "id": 123456789,
+      "first_name": "John",
+      "last_name": "Doe",
+      "username": "Username",
+      "type": "private"
+    },
+    "date": 1751111111,
+    "text": "\u0645\u0631\u062d\u0628\u0627\u0020\u0628\u0627\u0644\u0639\u0627\u0644\u0645"
+  }
+}

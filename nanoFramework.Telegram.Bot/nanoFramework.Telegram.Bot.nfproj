@@ -15,6 +15,7 @@
     <RootNamespace>nanoFramework.Telegram.Bot</RootNamespace>
     <AssemblyName>nanoFramework.Telegram.Bot</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <DocumentationFile>bin\$(Configuration)\nanoFramework.Telegram.Bot.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
@@ -49,6 +50,7 @@
     <Compile Include="Core\Providers\ISettingsProvider.cs" />
     <Compile Include="Core\Providers\IURLProvider.cs" />
     <Compile Include="Core\Providers\URLProvider.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="TelegramBot.cs" />
     <Compile Include="Core\API\HttpUpdatesReceiver.cs" />
     <Compile Include="Core\TelegramBotEvents.cs" />

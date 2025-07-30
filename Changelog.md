@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0]
+
+### Added
+
+- Ability to decode unicode from HttpClient response
+
 ## [1.0.1]
 
 ### Fixed

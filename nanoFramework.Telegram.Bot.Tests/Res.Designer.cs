@@ -31,11 +31,15 @@ namespace nanoFramework.Telegram.Bot.Tests
         {
             return ((string)(nanoFramework.Runtime.Native.ResourceUtility.GetObject(ResourceManager, id)));
         }
+
         [SerializableAttribute()]
         internal enum StringResources : short
         {
+            SendMessageResponseWithUnicode = -26461,
+            GetUpdatesOneMessageWithUnicodeResponse = -22294,
             GetUpdatesOneMessageAndOneCallbackResponse = -9628,
             GetUpdatesOneCallbackResponse = -9122,
+            GetMeResponseWithUnicode = 6835,
             SendMessageResponse = 9488,
             BaseResponseOk = 10185,
             GetUpdatesOneMessageResponse = 15556,
