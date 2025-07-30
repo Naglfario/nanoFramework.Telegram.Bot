@@ -127,6 +127,9 @@
   <data name="GetMeResponse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\GetMeResponse.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="GetMeResponseWithUnicode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GetMeResponseWithUnicode.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="GetUpdatesOneCallbackResponse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\GetUpdatesOneCallbackResponse.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
@@ -136,7 +139,13 @@
   <data name="GetUpdatesOneMessageResponse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\GetUpdatesOneMessageResponse.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="GetUpdatesOneMessageWithUnicodeResponse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GetUpdatesOneMessageWithUnicodeResponse.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="SendMessageResponse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\SendMessageResponse.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SendMessageResponseWithUnicode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\SendMessageResponseWithUnicode.json;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

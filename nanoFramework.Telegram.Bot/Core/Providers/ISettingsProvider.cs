@@ -37,5 +37,10 @@
         /// Automatically use endpoint "answerCallbackQuery" to answer on all callback queries
         /// </summary>
         public bool AnswerCallbackQuery { get; }
+
+        /// <summary>
+        /// Decode unicode when receiving content from Telegram
+        /// </summary>
+        public bool DecodeUnicode { get; }
     }
 }

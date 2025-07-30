@@ -14,7 +14,8 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
         {
             var urlProvider = new FakeURLProvider();
             var httpClientProvider = new FakeHttpClientProvider(null);
-            var target = new GetMeReceiver(urlProvider, httpClientProvider);
+            var settingsProvider = new FakeSettingsProvider();
+            var target = new GetMeReceiver(urlProvider, httpClientProvider, settingsProvider);
 
             var act = target.GetMe();
 
@@ -25,6 +26,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
         public void HttpClientReturnNotSuccessStatusCode_ShouldReturnNullAndNotThrow()
         {
             var urlProvider = new FakeURLProvider();
+            var settingsProvider = new FakeSettingsProvider();
 
             void RunCycle(int start, int end)
             {
@@ -32,7 +34,7 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
                 {
                     var response = new HttpResponseMessage((HttpStatusCode)i);
                     var httpClientProvider = new FakeHttpClientProvider(response);
-                    var target = new GetMeReceiver(urlProvider, httpClientProvider);
+                    var target = new GetMeReceiver(urlProvider, httpClientProvider, settingsProvider);
 
                     var act = target.GetMe();
 
@@ -49,11 +51,12 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
         public void HttpClientReturnEmptyJson_ShouldReturnNotOkAndNotThrow()
         {
             var urlProvider = new FakeURLProvider();
+            var settingsProvider = new FakeSettingsProvider();
             var httpContent = new FakeHttpContent("{}");
             var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK)
             { Content = httpContent };
             var httpClientProvider = new FakeHttpClientProvider(httpResponseMessage);
-            var target = new GetMeReceiver(urlProvider, httpClientProvider);
+            var target = new GetMeReceiver(urlProvider, httpClientProvider, settingsProvider);
 
             var act = target.GetMe();
 
@@ -64,10 +67,11 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
         public void HttpClientReturnFormatted401_ShouldReturnNotNullAndNotOk()
         {
             var urlProvider = new FakeURLProvider();
+            var settingsProvider = new FakeSettingsProvider();
             var httpResponseMessage = GetResponse(Res.StringResources.BaseResponse401, HttpStatusCode.Unauthorized);
 
             var httpClientProvider = new FakeHttpClientProvider(httpResponseMessage);
-            var target = new GetMeReceiver(urlProvider, httpClientProvider);
+            var target = new GetMeReceiver(urlProvider, httpClientProvider, settingsProvider);
 
             var act = target.GetMe();
 
@@ -79,9 +83,26 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
         public void HttpClientReturnBotInfo_ShouldNotReturnNotNullAndOk()
         {
             var urlProvider = new FakeURLProvider();
+            var settingsProvider = new FakeSettingsProvider();
             var httpResponseMessage = GetResponse(Res.StringResources.GetMeResponse);
             var httpClientProvider = new FakeHttpClientProvider(httpResponseMessage);
-            var target = new GetMeReceiver(urlProvider, httpClientProvider);
+            var target = new GetMeReceiver(urlProvider, httpClientProvider, settingsProvider);
+
+            var act = target.GetMe();
+
+            Assert.IsNotNull(act);
+            Assert.IsTrue(act.ok);
+        }
+
+        [TestMethod]
+        public void HttpClientReturnBotInfoWithUnicode_ShouldNotThrow()
+        {
+            var urlProvider = new FakeURLProvider();
+            var settingsProvider = new FakeSettingsProvider();
+            settingsProvider.DecodeUnicode = true;
+            var httpResponseMessage = GetResponse(Res.StringResources.GetMeResponseWithUnicode);
+            var httpClientProvider = new FakeHttpClientProvider(httpResponseMessage);
+            var target = new GetMeReceiver(urlProvider, httpClientProvider, settingsProvider);
 
             var act = target.GetMe();
 

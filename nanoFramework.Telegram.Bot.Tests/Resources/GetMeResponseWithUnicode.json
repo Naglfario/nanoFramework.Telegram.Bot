@@ -1,0 +1,14 @@
+﻿{
+  "ok": true,
+  "result": {
+    "id": 123456789,
+    "is_bot": true,
+    "first_name": "\u041a\u043e\u0440\u043c\u0443\u0448\u043a\u0430",
+    "username": "my_bot",
+    "can_join_groups": true,
+    "can_read_all_group_messages": false,
+    "supports_inline_queries": false,
+    "can_connect_to_business": false,
+    "has_main_web_app": false
+  }
+}

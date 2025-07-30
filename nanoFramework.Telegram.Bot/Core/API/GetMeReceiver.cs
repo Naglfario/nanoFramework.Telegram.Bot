@@ -1,6 +1,7 @@
 ﻿using nanoFramework.Json;
 using nanoFramework.Telegram.Bot.Core.Models;
 using nanoFramework.Telegram.Bot.Core.Providers;
+using nanoFramework.Telegram.Bot.Extensions;
 using System;
 
 namespace nanoFramework.Telegram.Bot.Core.API
@@ -9,13 +10,16 @@ namespace nanoFramework.Telegram.Bot.Core.API
     {
         private readonly IURLProvider _urlProvider;
         private readonly IHttpClientProvider _httpClient;
+        private readonly ISettingsProvider _settings;
 
         public GetMeReceiver(
             IURLProvider urlProvider,
-            IHttpClientProvider httpClient)
+            IHttpClientProvider httpClient,
+            ISettingsProvider settings)
         {
             _urlProvider = urlProvider;
             _httpClient = httpClient;
+            _settings = settings;
         }
 
         public GetMeResponse GetMe()
@@ -25,9 +29,11 @@ namespace nanoFramework.Telegram.Bot.Core.API
                 var url = _urlProvider.GetMe();
                 using var response = _httpClient.Get(url);
                 if (response == null) return null;
+                var textResponse = response.Content.ReadAsString();
+                if (_settings.DecodeUnicode) textResponse = textResponse.DecodeUnicode();
 
                 var deserializedResponseObject = JsonConvert.DeserializeObject(
-                    response.Content.ReadAsString(), typeof(GetMeResponse));
+                    textResponse, typeof(GetMeResponse));
 
                 return deserializedResponseObject is GetMeResponse deserializedResponse
                     ? deserializedResponse

@@ -1,4 +1,5 @@
 ﻿using nanoFramework.Telegram.Bot.Core;
+using nanoFramework.Telegram.Bot.Core.Providers;
 using nanoFramework.Telegram.Bot.Core.Updates;
 using nanoFramework.Telegram.Bot.Tests.Fakes;
 using nanoFramework.TestFramework;
@@ -37,6 +38,37 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
 
             Assert.AreEqual("", errors, "Errors is not expected");
             Assert.AreEqual(1, messageReceived);
+            Assert.AreEqual(0, callbacksReceived, "Callbacks is not expected");
+        }
+
+        [TestMethod]
+        public void Start_WithUnicodeMessage_UnicodeShouldBeDecoded()
+        {
+            var events = new TelegramBotEvents();
+            int callbacksReceived = 0;
+            var messageText = string.Empty;
+            string errors = "";
+
+            events.OnError += (problemDetails) =>
+            { errors += $"{problemDetails.Message}; "; };
+            events.OnCallbackQuery += (callback) =>
+            { callbacksReceived++; };
+            events.OnMessageReceived += (test) =>
+            { messageText = test.text; };
+
+            var settings = new FakeSettingsProvider();
+            settings.DecodeUnicode = true;
+            var urlProvider = new FakeURLProvider();
+            var response = GetResponse(Res.StringResources.GetUpdatesOneMessageWithUnicodeResponse);
+            var httpClientProvider = new FakeHttpClientProvider(response);
+            var target = new HttpUpdatesReceiver(events, settings, urlProvider, httpClientProvider);
+
+            target.StartPolling();
+            Thread.Sleep(50);
+
+            Assert.AreEqual("Über", messageText);
+            Assert.AreNotEqual(@"\u00dc\u0062\u0065\u0072", messageText);
+            Assert.AreEqual("", errors, "Errors is not expected");
             Assert.AreEqual(0, callbacksReceived, "Callbacks is not expected");
         }
 

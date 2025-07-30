@@ -31,6 +31,26 @@ namespace nanoFramework.Telegram.Bot.Tests.Tests.API
         }
 
         [TestMethod]
+        public void Send_ResponseWithUnicode_ShouldNotThrow()
+        {
+            var events = new TelegramBotEvents();
+            var urlProvider = new FakeURLProvider();
+            var response = GetResponse(Res.StringResources.SendMessageResponseWithUnicode);
+            var httpClientProvider = new FakeHttpClientProvider(response);
+            var settings = new FakeSettingsProvider()
+            {
+                UseEventsForSendFailures = false,
+                DecodeUnicode = true
+            };
+            var target = new MessageSender(events, urlProvider, httpClientProvider, settings);
+            var command = new SendTelegramMessageCommand();
+
+            var act = target.Send(command);
+
+            Assert.IsTrue(act.ok);
+        }
+
+        [TestMethod]
         public void Send_NullResponse_ShouldReturnNotOkResultAndFireEvent()
         {
             var events = new TelegramBotEvents();

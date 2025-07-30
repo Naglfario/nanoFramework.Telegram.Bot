@@ -33,6 +33,9 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
         /// <inheritdoc/>
         public bool AnswerCallbackQuery { get; private set; } = true;
 
+        /// <inheritdoc/>
+        public bool DecodeUnicode { get; private set; } = false;
+
         internal void SetPollDelay(int delay)
         {
             if(delay < 0)
@@ -78,5 +81,7 @@ namespace nanoFramework.Telegram.Bot.Core.Providers
         internal void SetUseEventsForSendFailures(bool newState) => UseEventsForSendFailures = newState;
 
         internal void SetAnswerCallbackQuery(bool newState) => AnswerCallbackQuery = newState;
+
+        internal void SetDecodeUnicode(bool newState) => DecodeUnicode = newState;
     }
 }

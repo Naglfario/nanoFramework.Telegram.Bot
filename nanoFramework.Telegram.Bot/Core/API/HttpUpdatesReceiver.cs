@@ -5,6 +5,7 @@ using nanoFramework.Telegram.Bot.Core.Models.Update;
 using nanoFramework.Telegram.Bot.Core.Providers;
 using nanoFramework.Telegram.Bot.Extensions;
 using System;
+using System.Diagnostics;
 using System.Threading;
 
 namespace nanoFramework.Telegram.Bot.Core.Updates
@@ -112,9 +113,11 @@ namespace nanoFramework.Telegram.Bot.Core.Updates
             {
                 var url = _urlProvider.GetUpdates(_lastSeenUpdateId);
                 using var response = _httpClient.Get(url);
+                var textResponse = response.Content.ReadAsString();
+                if(_settings.DecodeUnicode) textResponse = textResponse.DecodeUnicode();
 
                 var telegramResponse = (TelegramUpdateResponse)JsonConvert.DeserializeObject(
-                       response.Content.ReadAsString(), typeof(TelegramUpdateResponse));
+                       textResponse, typeof(TelegramUpdateResponse));
 
                 var problemDetails = telegramResponse.GetProblemDetails();
 
