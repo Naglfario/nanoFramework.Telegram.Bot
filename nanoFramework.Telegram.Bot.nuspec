@@ -19,8 +19,8 @@
     <tags>nanoFramework C# csharp Telegram tg bot client</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.17.11" />
-      <dependency id="nanoFramework.Json" version="2.2.203" />
-      <dependency id="nanoFramework.System.Net.Http" version="1.5.200" />
+      <dependency id="nanoFramework.Json" version="2.2.210" />
+      <dependency id="nanoFramework.System.Net.Http" version="1.5.206" />
     </dependencies>
   </metadata>
   <files>
